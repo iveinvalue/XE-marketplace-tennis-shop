@@ -1,0 +1,135 @@
+{@ Context::addJsFile("./common/js/jquery.js", true, '', -100000) }
+{@ Context::addJsFile("./common/js/js_app.js", true, '', -100000) }
+{@ Context::addJsFile("./common/js/common.js", true, '', -100000) }
+{@ Context::addJsFile("./common/js/xml_handler.js", true, '', -100000) }
+{@ Context::addJsFile("./common/js/xml_js_filter.js", true, '', -100000) }
+{@ Context::loadLang('./modules/marketplace/m.skins/default/lang')}
+<!--%import("js/mmarketplace.js")-->
+<!--%import("css/mmarketplace.css")-->
+<div class="hd hx h2">
+	<div class="category"><!--@if($module_info->hide_category == "N" && $oDocument->get('category_srl'))--><a href="{getUrl('document_srl','','category',$oDocument->get('category_srl'))}">{$category_list[$oDocument->get('category_srl')]->title}</a><!--@end--></div>
+	<h2 class="title">{$oDocument->getTitle()}</h2>
+
+</div>
+<div class="co">
+
+<!--
+{@ $thumbnails = $oMarketItem->getThumbnails(400,0,'ratio')}
+<img src="{$val}" loop="$thumbnails => $val" />-->
+
+
+<dl class="xv" cond="!$oMarketItem->isNotice()">
+
+	<div class="itm_code" style="margin-top:10px;margin-bottom:10px">계좌번호 : 국민은행 629302-95-106134 박현창 </div>
+	<br>
+	<div class="itm_code" style="margin-top:0px;margin-bottom:0px">박코치 : 010-3706-2477 | 031-552-2999</div>
+
+	<dt><span class="label">제품명</span></dt>
+	<dd>{$oMarketItem->get('product_name')}</dd>
+
+					
+	<block cond="($oMarketItem->get('used_month') != 0)">
+	<dt><span class="label">라켓 무게</span></dt>
+	<dd>{$oMarketItem->get('used_month')}</dd>
+	</block>
+						
+					
+	<!-- /Extra Output -->
+	<block cond=" ($oMarketItem->get('original_price') != NULL)">
+	<dt><span class="label">정상 가격</span></dt>
+	<dd style="text-decoration:line-through;">{number_format($oMarketItem->get('original_price'))}<small>원</small></dd>
+	</block>
+					
+	<dt><span class="label">판매 가격</span></dt>
+	<dd class="price" style="font-size:1.5em;">{number_format($oMarketItem->get('price'))}<small>원</small></dd>
+
+
+	
+	<!--@if($oDocument->isExtraVarsExists())-->
+	<!--@foreach($_extra_vars as $key => $val)-->
+		<dt>{$val->name}</dt>
+		<dd>{$val->getValueHTML()}</dd>
+	<!--@end-->
+	<!--@end-->
+</dl>
+
+
+{$oDocument->getContent(false)}
+
+</div>
+<div id="skip_co"></div>
+
+<!--@if($oDocument->getCommentCount())-->
+<div class="hx h3">
+	<h3 id="clb">{$lang->comment} <em>[{$oDocument->getCommentCount()}]</em></h3> 
+	<button type="button" class="tg tgr" title="open/close"></button>
+</div>
+<!--@endif-->
+<!--@if($grant->write_comment && $oDocument->isEnableComment() )-->
+<div class="hx h3">
+	<h3>{$lang->write_comment}</h3>
+	<button type="button" class="tg" title="open/close"></button>
+</div>
+<form ruleset="insertComment" action="./" method="post" class="ff tgo open">
+	<input type="hidden" name="act" value="procMarketplaceInsertComment" />
+	<input type="hidden" name="mid" value="{$mid}" />
+	<input type="hidden" name="document_srl" value="{$oDocument->document_srl}" />
+	<input type="hidden" name="comment_srl" value="" />
+	<ul>
+		<li>
+			<label for="rText">{$lang->comment}</label>
+			<textarea class="textarea" name="content" rows="8" cols="10" id="rText"></textarea>
+		</li>
+		<!--@if(!$is_logged)-->
+		<li>
+			<label for="uName">{$lang->writer}</label>
+			<input name="nick_name" type="text" id="uName" />
+		</li>
+		<li>
+			<label for="uMail">{$lang->email_address}</label>
+			<input name="email_address" type="email" id="uMail" />
+		</li>
+		<li>
+			<label for="uPw">{$lang->password}</label>
+			<input name="password" type="password" id="uPw" />
+		</li>
+		<li>
+			<label for="uSite">{$lang->homepage}</label>
+			<input name="homepage" type="url" id="uSite" value="http://" />
+		</li>
+		<!--@endif-->
+	</ul>
+	<div class="bna">
+		<input name="" type="submit" value="{$lang->cmd_comment_registration}" class="bn white full" />
+	</div>
+</form>
+<!--@end-->
+<div style="height:1px;overflow:hidden;background:#ddd"></div>
+<div class="bna">
+	<span class="fl"><a href="{getUrl('document_srl','')}" class="bn white">{$lang->cmd_list}</a></span>
+	
+</ul>
+<script>
+//<![CDATA[
+jQuery(function($){
+	$('.co .mm').next().hide();
+	$('.mm').click(function(){ $(this).hide().next().show();});
+	$('.tgo').removeClass('open');
+	$('.tg').click(function(){
+		$(this).parent('.h3').next('.tgo').toggleClass('open');
+	});
+	var loaded = false;
+	$('.tgr').click(function(){
+		if(!loaded) {
+			loaded = true;
+			{@ $lastpage = 1; }
+			{@ $temp = $oDocument->getComments() }
+			<!--@if($oDocument->comment_page_navigation)-->
+			{@ $lastpage = $oDocument->comment_page_navigation->last_page }
+			<!--@endif-->
+			loadPage({$oDocument->document_srl}, {$lastpage});
+		}
+	});
+});
+//]]>
+</script>

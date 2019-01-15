@@ -1,0 +1,95 @@
+<load target="default.css" />
+<load target="plugin/xe-icon/xeicon.css" />
+
+<div class="mp-box mp-popup-box">
+<form action="./" ruleset="insertAdvertise" method="post" class="mp-form-insert">
+<input type="hidden" name="act" value="procMarketplaceInsertAdvertise" />
+<input type="hidden" name="mid" value="{$mid}" />
+<input type="hidden" name="document_srl" value="{$document_srl}" />
+
+	<div class="mp-content">
+		<div class="content_header">
+			<div class="mp-title-insert-advertise mp-hidetext">프리미엄 광고 등록</div>
+			<a href="javascript:window.close();" class="mp-button button-white button-small button-return"><i class="xe-close"></i> 창 닫기</a>
+		</div>
+		
+		<div class="mp-block" style="padding: 0 10px;">			
+			<div class="mp-block">
+				<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}" style="margin-top:0;margin-bottom:25px;">
+					<p>{$XE_VALIDATOR_MESSAGE}</p>
+				</div>
+
+				<div class="mp-bid-list">
+				<h3><i class="xe-canvas"></i> 프리미엄 광고 입찰 목록</h3>
+				
+				
+
+				
+				
+				
+				<ul>
+					<block loop="$advertise_list => $key, $val">
+
+					<li class="active"|cond="$val->bid_price == $advertise_info->bid_price"><span>{$key+1}.</span> 프리미엄 광고 {$key+1}위 입찰가 : {$val->bid_price} 포인트</li>
+					</block>
+				</ul>
+				</div>
+
+				<style type="text/css">
+					.mp-box .mp-bid-list {
+						float:left;
+						width: 43%;
+						margin-top: 5px;
+						margin-bottom: 40px;
+					}
+					.mp-box .mp-bid-list h3 {
+						padding-bottom: 10px;
+						border-bottom: 1px solid #c2c2c2;
+					}
+					.mp-box .mp-bid-list li {
+						padding: 9px 10px 11px 5px;
+						font-size: 13px;
+						border-bottom: 1px solid #f0f0f0;
+					}
+					.mp-box .mp-bid-list li.active {
+						background-color:#FFFFD2;
+					}
+					.mp-box .mp-bid-list li span {
+						font-size: 17px;
+						font-weight: bold;
+					}
+				</style>
+
+				<div class="mp-block" style="width: 42%; float:right; clear:none;">
+					<section class="mp-section">
+					  <label for="bid_price" class="mp-label" value="">입찰가</label>
+					  <input id="bid_price" type="text" value="{$advertise_info->bid_price}" name="bid_price" class="mp-input number"> 포인트
+					  <p class="description" cond="$module_info->minimum_bid_price">최소 입찰 금액은 <strong>{$module_info->minimum_bid_price}</strong> 포인트 입니다.</p>
+					</section>
+
+					
+					
+					
+
+					
+					<section class="mp-section">
+					  <label for="balance" class="mp-label">광고종류</label>
+					  
+					  <input type="radio" id="balance" name="balance" value="1000">행사<br>
+					<input type="radio" id="balance" name="balance" value="1001">신상품<br>
+					
+
+					</section>
+				</div>
+
+				<div class="btnArea">
+					<input type="submit" value="{$lang->cmd_registration}" class="btn" />
+				</div>	
+
+			</div>
+		</div>
+
+	</div>
+
+</form>
+</div>

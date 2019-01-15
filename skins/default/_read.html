@@ -1,0 +1,279 @@
+<load target="plugin/elevatezoom/jquery.elevatezoom.js" />
+<load target="plugin/colorbox/jquery.colorbox.js" />
+<load target="plugin/colorbox/example2/colorbox.css" />
+
+<script>
+xe.lang.ask_change_soldout = '{$lang->ask_change_soldout}';
+xe.lang.ask_change_cancel = '{$lang->ask_change_cancel}';
+xe.lang.ask_change_selling = '{$lang->ask_change_selling}';
+</script>
+<div class="board_read">
+	<!-- 제목 상단 -->
+	<div style="padding:18px 20px 20px 20px;border-radius:5px;background-color:#fff;" class="read_header card2 "|cond="!$oMarketItem->isNotice()" class="read_header notice"|cond="$oMarketItem->isNotice()" >
+		<h2><a href="{$oMarketItem->getPermanentUrl()}">{$oMarketItem->get('product_name')}</a></h2><!--  - {$oMarketItem->get('priority_area')}-->
+		<ul class="write_info" style="">
+			<span cond="$module_info->hide_category=='N'">
+				<a href="{getUrl('category',$oMarketItem->get('category_srl'), 'document_srl', '')}" class="category">
+					<block cond="$category_list[$category_list[$oMarketItem->get('category_srl')]->parent_srl]->parent_srl">
+						{$category_list[$category_list[$category_list[$oMarketItem->get('category_srl')]->parent_srl]->parent_srl]->title} <i class="xe-angle-right"></i>
+					</block>
+					<block cond="$category_list[$oMarketItem->get('category_srl')]->parent_srl">
+						{$category_list[$category_list[$oMarketItem->get('category_srl')]->parent_srl]->title} <i class="xe-angle-right"></i>
+					</block>
+					{$category_list[$oMarketItem->get('category_srl')]->title}
+				</a>
+			</span>
+			<span>{$oMarketItem->getRegdate('Y년 m월 d일 ')}</span>
+		</ul>
+		<a style="margin:10px 20px 10px 10px" href="{getUrl('document_srl','')}" class="mp-button button-small button-white"><i class="xe-mail-reply"></i> 목록으로</a>
+	</div>
+
+	<block cond="!$oMarketItem->isNotice()">
+	<!-- 상품 정보 -->
+	<div style="margin-top:20px;border-radius:5px;background-color:#fff;height:500px" class="itm_info card2">
+		<div class="itm_thumbnails">
+			{@ 
+				$thumbnails = $oMarketItem->getThumbnailsObject(300,300);
+				$big_thumb = $thumbnails[0];
+			}
+			<div class="itm_prview">
+				<block cond="count($thumbnails) > 1">
+				<a class="prvbox" href="#">
+					<img class="mainbox" src="{$big_thumb->thumbnail_url}" />
+					<div class="desc"><span>클릭하여 크게봅니다</span></div>
+				</a>
+				</block>
+				<block cond="count($thumbnails) <= 1">
+				<a class="prvbox colorbox" href="{$big_thumb->uploaded_filename}">
+					<img class="mainbox" src="{$big_thumb->thumbnail_url}" />
+					<div class="desc"><span>클릭하여 크게봅니다</span></div>
+				</a>
+				</block>
+			</div>
+			<div id="thumbnails" class="thumbnails" cond="count($oMarketItem->getThumbnails())>1"> 
+				<block loop="$thumbnails => $key, $thumbnail">
+					<a class="colorbox active"|cond="!$key" class="colorbox"|cond="$key" href="{$thumbnail->uploaded_filename}"><img src="{$thumbnail->thumbnail_url}" /></a>
+				</block>
+			</div>
+			<!-- 대표사진만 있을때 대표사진에 Colorbox 적용 -->
+			<script cond="count($thumbnails) <= 1">
+			jQuery(".itm_prview .colorbox").colorbox({maxWidth : '800px', opacity : '0.7'});
+			</script>
+			<!-- 다른 사진도 있을 경우 -->
+			<script>
+			jQuery(".prvbox").click(
+				function() {
+					var index = jQuery(".colorbox.active").index();
+					jQuery(".colorbox").eq(index).click();
+					return;
+				});
+			jQuery(".thumbnails .colorbox").hover(
+				function() {
+					jQuery(".colorbox").removeClass('active');
+					jQuery(this).addClass('active');
+					jQuery(".itm_prview img").attr('src', jQuery(this).find('img').attr('src'));
+				}
+			).colorbox({rel:'thumb', maxWidth : '800px', opacity : '0.7'});
+			</script>
+		</div>
+
+		<div class="info_details">
+			<div class="itm_code" style="margin-bottom:10px">계좌번호 : 국민은행 629302-95-106134 박현창 </div>
+			<div class="itm_code">박코치 : 010-3706-2477 | 031-552-2999</div>
+			<!--<div class="itm_code">상품코드 : {sprintf('%08d',$document_srl)}</div>-->
+			<h3>제품 설명</h3>
+			<table>
+				<colgroup><col style="width: 110px;"><col></colgroup>
+				<tbody>
+					<tr>
+						<td><span class="label">제품명</span></td>
+						<td>{$oMarketItem->get('product_name')}</td>
+					</tr>
+					
+					<block cond="($oMarketItem->get('used_month') != 0)">
+						<tr>
+							<td><span class="label">제품사양</span></td>
+							<td>{$oMarketItem->get('size1')}L /  {$oMarketItem->get('used_month')}G / {$oMarketItem->get('size2')}mm / 
+							{$oMarketItem->get('string1')}X{$oMarketItem->get('string2')} / 
+							({$oMarketItem->get('frame1')},{$oMarketItem->get('frame2')},{$oMarketItem->get('frame3')})mm /
+							{$oMarketItem->get('length')}inch / G{$oMarketItem->get('g_size')}
+							</td>
+						</tr>
+					</block>
+						
+					
+
+					<!-- Extra Output -->
+					<tr cond="$oMarketItem->isExtraVarsExists()" loop="$oMarketItem->getExtraVars() => $key,$val">
+						<td><span class="label">{$val->name}</span></td>
+						<td>{$val->getValueHTML()}</td>
+					</tr>
+					
+					<!-- /Extra Output -->
+					<block cond=" ($oMarketItem->get('original_price') != NULL)">
+					<tr>
+						<td><span class="label">정상 가격</span></td>
+						<td style="text-decoration:line-through;font-size:1.4em;color:#413f40">{number_format($oMarketItem->get('original_price'))}<small>원</small></td>
+					</tr>
+					</block>
+					
+					<tr>
+						<td><span class="label">판매 가격</span></td>
+						<td style="font-size:1.8em;" class="price">{number_format($oMarketItem->get('price'))}<small>원</small></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<h3 style="padding-top:15px;">추가 설명</h3>
+			<table>
+				<colgroup><col style="width: 110px;"><col></colgroup>
+				<tbody>
+					<tr>
+						<td><span class="label">내용</span></td>
+						<td>{$oMarketItem->get('priority_area')}</td>
+					</tr>
+
+					
+				</tbody>
+			</table>
+
+			<!-- 판매완료 메세지-->		
+			<div class="closed" cond="$oMarketItem->isSoldout()">
+				<i class="xe-exclamation-triangle"></i> 이 상품은 <strong>품절</strong>되었습니다.
+			</div>
+			<!-- 판매중단 메세지-->
+			<div class="closed" cond="$oMarketItem->isCancel()">
+				<i class="xe-exclamation-triangle"></i> 이 상품은 <strong>판매중단</strong>되었습니다.
+			</div>
+			<!-- 판매중일때 연락처 공개 -->
+			<div class="seller_contact2" cond="$oMarketItem->isSelling()" style="padding-top:35px;">
+				<a style="text-decoration:none;margin-right:10px;padding:15px 25px;background:#f5525b" class="btn_secondary_round" href="javascript:getSellerContact('{$oMarketItem->document_srl}','.contact_number');">
+					<span style="font-size:1.2em;color:#ffffff">구매하기</span>
+				</a>
+				<block cond="($oMarketItem->get('seller_contact') != null)">
+				<a style="text-decoration:none;margin-right:10px;padding:15px 25px;background:#747cfd" class="btn_secondary_round" href="{$oMarketItem->get('seller_contact')}" target="_blank">
+					<span style="font-size:1.2em;color:#ffffff">중고싸다 이동</span>
+				</a>
+				</block>
+				<block cond="$oMarketItem->isWishItem()">
+					<a style="text-decoration:none;padding:15px 25px;background:#faae5c" class="btn_secondary_round" href="javascript:doToggleWishItem('{$oMarketItem->document_srl}');"><span style="font-size:1em;color:#000">찜하기 취소</span></a>
+				</block>
+				<block cond="!$oMarketItem->isWishItem()">
+					<a style="text-decoration:none;padding:15px 25px;background:#faae5c" class="btn_secondary_round" href="javascript:doToggleWishItem('{$oMarketItem->document_srl}');"><span style="font-size:1em;color:#000">찜하기</span></a>
+				</block>
+				<div class="contact_number">
+					<img class="callout" src="images/callout.gif" />
+					<strong>문의하세요.</strong>
+				</div>
+			</div>
+			
+			
+		</div>
+
+	    <div class="mp-clearfix" style="height:100px"></div>
+	</div>
+	</block>
+	
+	<br>
+	<br>
+	<span class="card2" style="margin-top:20px;color:#fff;background:#413f40; padding:6px 9px; border-radius:2px; font-size: 15px;">
+		상세 설명
+	</span>
+	<br>
+
+	<div class="read_content card2" style="margin-top:20px;padding:20px;border-radius:5px;background-color:#fff;">
+		{$oMarketItem->getContent(false)}
+		<!-- 판매자용 상품 관리 버튼 -->
+		<block cond="$oMarketItem->isEditable() && $oMarketItem->isSelling()">
+		<div class="lst_header contrlbox_header">
+			<h3 class="lst_tit"><i class="xe-tool"></i> 판매자 상품 관리</h3>
+		</div>
+		<div class="item_controlbox">
+			<ul class="btn_area">	
+
+				<li cond="$module_info->item_modify && $module_info->item_modify !== 'N'">
+					<a onclick="popopen(this.href, 'popup'); return false;" href="{getUrl('', 'module', 'marketplace', 'act', 'dispMarketplaceModifyItem', 'document_srl', $oMarketItem->document_srl)}" class="btn_default">
+					<i class="xe-icon xe-pencil-point"></i>
+					<p class="btn_txt">기본 정보 수정</p>
+					</a>
+					<p class="btn_dscription">기본 정보를 수정할 수 있습니다.</p>
+				</li>
+				<li cond="$module_info->item_modify && $module_info->item_modify !== 'N'">
+					<a   href="{getUrl('', 'module', 'marketplace', 'act', 'dispMarketplaceWrite', 'document_srl', $oMarketItem->document_srl)}" class="btn_default">
+					<i class="xe-icon xe-pencil-point"></i>
+					<p class="btn_txt">상세 설명 수정</p>
+					</a>
+					<p class="btn_dscription">상세 설명을 수정할 수 있습니다.</p>
+				</li>
+				<li cond="$module_info->item_modify && $module_info->item_modify !== 'N'">
+					<a href="javascript:doChangeItemStatus({$oMarketItem->document_srl},'cancel');" class="btn_default">
+					<i class="xe-icon xe-pencil-point"></i>
+					<p class="btn_txt">판매 중단</p>
+					</a>
+					<p class="btn_dscription">판매 중단</p>
+				</li>
+				<li cond="$module_info->item_modify && $module_info->item_modify !== 'N'">
+					<a onclick="popopen(this.href, 'popup'); return false;" href="{getUrl('', 'module', 'marketplace', 'act', 'dispMarketplaceDelete', 'document_srl', $oMarketItem->document_srl)}" class="btn_default">
+					<i class="xe-icon xe-pencil-point"></i>
+					<p class="btn_txt">상품 삭제</p>
+					</a>
+					<p class="btn_dscription">상품을 삭제 합니다.</p>
+				</li>
+				
+				<br>
+				<br>
+
+				<li cond="$module_info->item_modify && $module_info->item_modify !== 'N'">
+					<block cond="$oMarketItem->isSelling()">
+					<a onclick="popopen(this.href, 'popup'); return false;" href="{getUrl('act','dispMarketplaceAdvertiseInsert','document_srl',$oMarketItem->document_srl)}" class="btn_default">
+					<i class="xe-icon xe-pencil-point"></i>
+					<p class="btn_txt">프리미엄 <br> 등록/수정</p>
+					</a>
+					<p class="btn_dscription">프리미엄 상품 관리</p>
+					</block>
+				</li>
+				
+				<li cond="$module_info->item_modify && $module_info->item_modify !== 'N'">
+					<block cond="$oMarketItem->isAdvertise()">
+					<a  href="javascript:doStopAdvertise({$oMarketItem->document_srl});" class="btn_default">
+					<i class="xe-icon xe-pencil-point"></i>
+					<p class="btn_txt">프리미엄 중단</p>
+					</a>
+					<p class="btn_dscription">프리미엄 상품 삭제</p>
+					</block>
+				</li>
+				
+			</a>	
+			</ul>
+		</div>
+		</block>
+	</div>
+
+	<div class="read_footer">
+		<div class="etc">
+			<div class="btn_area" cond="$oMarketItem->isNotice() && $oMarketItem->isGranted()">
+				<div class="btn_area_r">
+					<ul class="func_bar_lst">
+					<li>
+						<a href="{getUrl('page','','act','dispMarketplaceNoticeWrite')}" class="w_type">
+							<i class="xe-pen"></i>
+							<span class="btn_txt">수정</span>
+						</a>
+					</li>
+					<li>
+						<a href="{getUrl('','document_srl',$document_srl,'act','dispMarketplaceDelete')}" class="w_type">
+							<i class="xe-close"></i>
+							<span class="btn_txt">삭제</span>
+						</a>
+					</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		</div>
+
+	<div class="mp-item-content">
+        <include target="_comment.html" />
+	</div>
+</div>
+

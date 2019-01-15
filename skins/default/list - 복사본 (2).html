@@ -1,0 +1,290 @@
+<include target="_header.html" cond="!$oDocument->isExists()"/>
+<include target="_header.html" cond="$oDocument->isExists()"/>
+<!--target="_header_read.html"-->
+
+<div class="mp-content" style="margin-left:220px;">
+	<include cond="$oDocument->isExists()" target="_read.html" />
+
+	<!--여기없으면 줄 이상해짐-->
+	<block cond="!$oDocument->isExists()">
+		<div style="overflow:hidden">
+		</div>
+	</block>
+	
+	<block cond="$module_info->use_advertise && !$oDocument->isExists() && !Context::get('search_keyword') " >
+	<div style="border-radius:5px;background-color:#413f40; padding-top: 0px; font-size: 13px;" class="card2" >
+		<div class="card2" style="border-radius:5px;padding:15px 15px 15px 15px;background-color:#413f40;width:100%;">
+			<div id="premium-ad" class="mp-carousel" >
+			
+				<!--@for($i=1;$i<=count($advertise_list);$i++)-->
+<!--@if($i==5)-->{@continue}<!--@end-->
+
+				<div class="item" cond="($advertise_list[$i]->get('balance') == '1000')">
+					{$i}----------
+					<block  >
+					<div class="card" style="background-color:#ffffff;float:left;margin:15px;height:255px;width:145px;" >	
+					
+						<div  style="position:relative">
+							<block cond=" ($advertise_list[$i]->getItemCondition() != NULL) && ($advertise_list[$i]->getItemCondition() != 'new') && ($advertise_list[$i]->getItemCondition() != 'no')">
+								<span style="height:25px;text-align:right;width:auto;padding:7px;font-size:1em;color:#ffffff;background-color:#f06060;" class="card mp-condition-badge mp-condition-badge-small mp-new">{$advertise_list[$i]->getItemCondition()}</span>
+							</block>
+							<a href="{getUrl('','act','procMarketplaceActionRecord','document_srl',$advertise_list[$i]->document_srl)}" >
+								<img class="zoom" width="145px" src="{$advertise_list[$i]->getThumbnail(300,300)}" alt="IMG-PRODUCT" style="transform:rotate(0deg);">
+							</a>
+						</div>
+								
+						<div style="margin-bottom:0px;margin-top:6px;margin-left:15px;margin-right:15px;">
+							<marquee behavior="slide" style="font-size:1.2em;color:#343434;font-weight:bold;" >{$advertise_list[$i]->get('product_name')}</marquee>
+							<marquee behavior="slide" style="font-size:1em;color:#535c67;font-weight:bold;">{$advertise_list[$i]->get('priority_area')}</marquee>
+						</div>
+										
+						<div style="float:left;margin-bottom:0px;margin-top:14px;margin-left:13px;margin-right:10px;">
+							<a href="{getUrl('','act','procMarketplaceActionRecord','document_srl',$advertise_list[$i]->document_srl)}" style="text-decoration:none;padding:5px 10px;background:#ef7e32" class="btn_secondary_round" ><span style="font-size:0.9em;color:#ffffff">￦ {$advertise_list[$i]->getPrice(true)}</span></a>
+						</div>
+										
+						<div style="float:right;margin-bottom:0px;margin-top:18px;margin-right:17px;">
+							<block cond="$advertise_list[$i]->isWishItem()">
+								<a class="active"|cond="$advertise_list[$i]->isWishitem()" href="javascript:doToggleWishItem('{$advertise_list[$i]->document_srl}');">
+									<img class="" src="images2/icons/icon-heart-02.png" alt="ICON">
+								</a>
+							</block>
+							<block cond="!$advertise_list[$i]->isWishItem()">
+								<a class="active"|cond="$advertise_list[$i]->isWishitem()" href="javascript:doToggleWishItem('{$advertise_list[$i]->document_srl}');">
+									<img class="" src="images2/icons/icon-heart-01.png" alt="ICON">
+								</a>
+							</block>
+						</div>
+					</div>	
+					</block>
+                </div>
+                
+		<!--@end-->
+            </div>
+		</div>
+    <script>
+    jQuery(document).ready(function() {
+      var owl = jQuery("#premium-ad");
+      owl.owlCarousel({
+        autoPlay: false, //Set AutoPlay to 3 seconds
+        stopOnHover : false,
+        scrollPerPage : true,
+        items : 5,
+        itemsDesktop : false,
+        itemsDesktopSmall : false,
+        itemsTablet : false,
+        itemsMobile : false,
+		scrollPerPage : true,
+		navigation: false,
+		pagination: false,
+		navigationText : ["이전","다음"]
+      });
+	  /*
+	  jQuery('.thumb_area').height(jQuery('.thumb_area').children('img').height());
+	  */
+      jQuery('.select_redirect').bind('change', function () {
+          var url = jQuery(this).val(); // get selected value
+          if (url) { // require a URL
+              window.location = url; // redirect
+          }
+          return false;
+      });
+    });
+    </script>
+	</div>	
+	<br>
+	</block>
+	
+	
+	
+	<block cond="$module_info->use_advertise && !$oDocument->isExists() && !Context::get('search_keyword') && !$category " >
+	
+	<div style="border-radius:5px;background-color:#413f40; padding-top: 0px; font-size: 13px;" class="card2" >
+		<div class="card2" style="border-radius:5px;padding:15px 15px 15px 15px;background-color:#413f40;width:100%;">
+			<div id="premium-ad2" class="mp-carousel" >
+                <div class="item" loop="$advertise_list => $item">
+				
+					<block cond="($item->get('balance') == '1001')" >
+					<div class="card" style="background-color:#ffffff;float:left;margin:15px;height:255px;width:145px;" >	
+					
+
+						<div  style="position:relative">
+							<block cond=" ($item->getItemCondition() != NULL) && ($item->getItemCondition() != 'new') && ($item->getItemCondition() != 'no')">
+								<span style="height:25px;text-align:right;width:auto;padding:7px;font-size:1em;color:#ffffff;background-color:#4990e2;" class="card mp-condition-badge mp-condition-badge-small mp-new">{$item->getItemCondition()}</span>
+							</block>
+							<a href="{getUrl('','act','procMarketplaceActionRecord','document_srl',$item->document_srl)}" >
+								<img class="zoom" width="145px" src="{$item->getThumbnail(300,300)}" alt="IMG-PRODUCT" style="transform:rotate(0deg);">
+							</a>
+						</div>
+								
+						<div style="margin-bottom:0px;margin-top:6px;margin-left:15px;margin-right:15px;">
+							<marquee behavior="slide" style="font-size:1.2em;color:#343434;font-weight:bold;" >{$item->get('product_name')}</marquee>
+							<marquee behavior="slide" style="font-size:1em;color:#535c67;font-weight:bold;">{$item->get('priority_area')}</marquee>
+						</div>
+										
+						<div style="float:left;margin-bottom:0px;margin-top:14px;margin-left:13px;margin-right:10px;">
+							<a href="{getUrl('','act','procMarketplaceActionRecord','document_srl',$item->document_srl)}" style="text-decoration:none;padding:5px 10px;background:#ef7e32" class="btn_secondary_round" ><span style="font-size:0.9em;color:#ffffff">￦ {$item->getPrice(true)}</span></a>
+						</div>
+										
+						<div style="float:right;margin-bottom:0px;margin-top:18px;margin-right:17px;">
+							<block cond="$item->isWishItem()">
+								<a class="active"|cond="$item->isWishitem()" href="javascript:doToggleWishItem('{$item->document_srl}');">
+									<img class="" src="images2/icons/icon-heart-02.png" alt="ICON">
+								</a>
+							</block>
+							<block cond="!$item->isWishItem()">
+								<a class="active"|cond="$item->isWishitem()" href="javascript:doToggleWishItem('{$item->document_srl}');">
+									<img class="" src="images2/icons/icon-heart-01.png" alt="ICON">
+								</a>
+							</block>
+						</div>
+					</div>	
+					</block>
+                </div>
+            </div>
+		</div>
+    <script>
+    jQuery(document).ready(function() {
+      var owl = jQuery("#premium-ad2");
+      owl.owlCarousel({
+        autoPlay: false, //Set AutoPlay to 3 seconds
+        stopOnHover : false,
+        scrollPerPage : true,
+        items : 5,
+        itemsDesktop : false,
+        itemsDesktopSmall : false,
+        itemsTablet : false,
+        itemsMobile : false,
+		scrollPerPage : true,
+		navigation: false,
+		pagination: false,
+		navigationText : ["이전","다음"]
+      });
+	  /*
+	  jQuery('.thumb_area').height(jQuery('.thumb_area').children('img').height());
+	  */
+      jQuery('.select_redirect').bind('change', function () {
+          var url = jQuery(this).val(); // get selected value
+          if (url) { // require a URL
+              window.location = url; // redirect
+          }
+          return false;
+      });
+    });
+    </script>
+	</div>	
+	</block>
+
+	<!--카테고리 설명-->
+	<div style="border-radius: 5px;padding:10px 0px 0px 0px;" class="" cond="$category">
+		<span class="card2" style="color:#fff;background:#413f40; padding:6px 9px;margin-right:5px;border-radius:2px; font-size: 15px;">마켓 상품 목록 ({$total_count})</span>
+		<span class="card2" style="color:#fff;background:#413f40; padding:6px 9px; border-radius:2px; font-size: 15px;">
+			<i class=" xe-angle-right" ></i> 
+		</span>
+		&nbsp
+		<span class="card2" style="color:#fff;background:#413f40; padding:6px 9px; border-radius:2px; font-size: 15px;" cond="$category_list[$category_list[$category]->parent_srl]->title">
+			{$category_list[$category_list[$category]->parent_srl]->title}
+		</span>
+		<span cond="$category_list[$category_list[$category]->parent_srl]->title">
+			&nbsp;
+		</span>
+		<span class="card2" style="color:#fff;background:#413f40; padding:6px 9px; border-radius:2px; font-size: 15px;" cond="$category_list[$category]->parent_srl">
+			<i class=" xe-angle-right" ></i> 
+		</span>
+		<span cond="$category_list[$category]->parent_srl">
+			&nbsp;
+		</span>
+		<span class="card2" style="color:#fff;background:#413f40; padding:6px 9px; border-radius:2px; font-size: 15px;">
+			{$category_list[$category]->title}
+		</span>
+	</div>
+	
+	<div style="border-radius:5px; padding:10px 0px 0px 0px;" class="" cond="!$category">
+		<br>
+		<span class="card2" style="color:#fff;background:#413f40; padding:6px 9px;margin-right:5px; border-radius:2px; font-size: 15px;">마켓 상품 목록 ({$total_count})</span>
+		<span class="card2" style="color:#fff;background:#413f40; padding:6px 9px; border-radius:2px; font-size: 15px;">
+			<i class=" xe-angle-right" ></i> 
+		</span>
+		&nbsp
+		<span class="card2" style="color:#fff;background:#413f40; padding:6px 9px; border-radius:2px; font-size: 15px;">
+			전체상품
+		</span>
+	</div>
+	
+	<br>
+	<!--카드뷰 상품-->
+	<div style="height:960px;border-radius:5px;background-color:#fff; padding-top: 0px font-size: 13px;" class="card2" >	
+		<div class="" style="border-radius:5px;padding:15px 0px 0px 20px;background-color:#fff;width:100%;">
+			<div class="item" loop="$marketitem_list=>$document" >
+			
+				
+				<div class="card" style="float:left;margin:10px;height:290px;width:185px;" >	
+					<div  style="position:relative">
+						<!--{$document->get('item_condition')}-->
+						<block cond=" ($document->get('item_condition') != NULL) && ($document->get('item_condition') != 'new') && ($document->get('item_condition') != 'no')">
+							<span style="height:25px;text-align:right;width:auto;padding:7px;font-size:1em;color:#ffffff;background-color:#413f40;" class="card mp-condition-badge mp-condition-badge-small mp-new">{$document->get('item_condition')}</span>
+						</block>
+						<a href="{getUrl('document_srl',$document->document_srl, 'listStyle', $listStyle, 'cpage','')}" >
+							<img class="zoom" width="185px" src="{$document->getThumbnail(300,300)}" alt="IMG-PRODUCT" style="transform:rotate(0deg);">
+						</a>
+					</div>
+					
+					<div style="margin-bottom:0px;margin-top:6px;margin-left:15px;margin-right:15px;">
+						<marquee behavior="slide" style="font-size:1.2em;color:#343434;font-weight:bold;" >{$document->get('product_name')}</marquee>
+						<marquee behavior="slide" style="font-size:1em;color:#535c67;font-weight:bold;">{$document->get('priority_area')}</marquee>
+					</div>
+							
+					<div style="float:left;margin-bottom:0px;margin-top:14px;margin-left:13px;margin-right:10px;">
+						<!--<a style="padding:5px 10px;border: 2px solid #535c67" class="btn_white_roundLine" href="{getUrl('document_srl',$document->document_srl, 'listStyle', $listStyle, 'cpage','')}"><span style="font-size:0.9em;color:#535c67">￦ {number_format($document->get('price'))}</span></a>-->
+						<a style="text-decoration:none;padding:5px 10px;background:#ef7e32" class="btn_secondary_round" href="{getUrl('document_srl',$document->document_srl, 'listStyle', $listStyle, 'cpage','')}"><span style="font-size:0.9em;color:#ffffff">￦ {number_format($document->get('price'))}</span></a>
+					</div>
+							
+					<div style="float:right;margin-bottom:0px;margin-top:18px;margin-right:17px;">
+						<block cond="$document->isWishItem()">
+							<a class="active"|cond="$document->isWishitem()" href="javascript:doToggleWishItem('{$document->document_srl}');">
+								<img class="" src="images2/icons/icon-heart-02.png" alt="ICON">
+							</a>
+						</block>
+						<block cond="!$document->isWishItem()">
+							<a class="active"|cond="$document->isWishitem()" href="javascript:doToggleWishItem('{$document->document_srl}');">
+								<img class="" src="images2/icons/icon-heart-01.png" alt="ICON">
+							</a>
+						</block>
+					</div>
+			
+				</div>		
+			</div>
+		</div>
+	</div>
+		
+	<!--페이지넘김-->
+	<div style="border-radius:5px;background-color:#fff;float:center;width:auto;height:60px;padding: 13px 10px 12px; font-size: 13px; margin-top:15px" class="card2">
+		<center class="bd_paginate" cond="$marketitem_list" style="margin-top:0px;">
+			<a class="pg_btn" href="{getUrl('page','','document_srl','','division',$division,'last_division',$last_division)}">
+				<i class="xe-angle-left"><span class="blind">{$lang->first_page}</span></i>
+			</a>
+			<block loop="$page_no=$page_navigation->getNextPage()">
+				<strong style="border-color:#535c67;background-color:#535c67;" cond="$page==$page_no">{$page_no}</strong> 
+				<a cond="$page!=$page_no" href="{getUrl('page',$page_no,'document_srl','','division',$division,'last_division',$last_division)}">{$page_no}</a>
+			</block>
+			<a class="pg_btn" href="{getUrl('page',$page_navigation->last_page,'document_srl','','division',$division,'last_division',$last_division)}">
+				<i class="xe-angle-right"><span class="blind">{$lang->last_page}</span></i>
+			</a>
+		</center>
+	</div>
+     
+	<!--관리-->
+	<div class="list_footer">
+		<div class="btnArea">
+			<block cond="$grant->manager">
+				<!--<a href="{getUrl('act','dispMarketplaceWrite','document_srl','')}" class="mp-button button-red" style="float:right; margin-left:10px"><i class="xe-photo-camera-b"></i> 내 물품 판매하기</a>-->
+				<!--<a cond="$grant->manager" href="{getUrl('mid',$mid,'act','dispMarketplaceNoticeWrite')}" class="btn"><i class="xe-pen"></i> 공지사항 작성</a>-->
+
+				<a cond="$grant->manager" href="{getUrl('act','dispMarketplaceWrite','document_srl','')}" class="btn"><i class="xe-pen"></i>물품 판매하기</a>
+			
+				
+			</block>
+		</div>
+	</div>
+</div>
+
+<include target="_footer.html" />

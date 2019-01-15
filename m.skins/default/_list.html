@@ -1,0 +1,57 @@
+
+
+<div class="hx hd h2">
+	<a href="{getUrl('','vid',$vid,'mid',$mid)}" style="font-size:0.9em;">마켓 상품 목록</a> <em>[{number_format($total_count)}]</em>
+	<!--@if($module_info->hide_category == "N")--><a href="{getUrl('page','','act','dispMarketplaceCategory','')}" class="ca">카테고리</a><!--@endif-->
+	
+</div>
+<ul class="lt">
+	<!--@foreach($notice_list as $no => $document)-->
+	<li>
+		<a href="{getUrl('document_srl', $document->document_srl)}">
+		<span class="title"><span class="notice">{$lang->notice}</span> <strong>{$document->getTitle($module_info->subject_cut_size)}</strong> <!--@if($document->getCommentCount())--><em>[{$document->getCommentCount()}]</em><!--@endif--></span>
+			<span class="auth"><strong>{$document->getNickName()}</strong> <span class="time">{$document->getRegDate("Y.m.d")}</span></span>
+		</a>
+	</li>
+	<!--@end-->
+	<!--@foreach($marketitem_list as $no => $marketitem)-->
+	<li>
+		<a href="{getUrl('document_srl', $marketitem->document_srl)}">
+			<div class="thumb" style="padding-right:10px;">
+				<img src="{$marketitem->getThumbnail(80, 80)}" style="border-radius:3px"/>
+			</div>
+			<div class="meta">
+				<block cond=" ($marketitem->get('item_condition') != NULL) && ($marketitem->get('item_condition') != 'new') && ($marketitem->get('item_condition') != 'no')">
+					<span style="" class="category">{$marketitem->get('item_condition')}</span>
+				</block>
+				<span class="category">
+					<!--@if($module_info->hide_category == "N" && $marketitem->get('category_srl'))-->{$category_list[$marketitem->get('category_srl')]->title} &rsaquo;<!--@end--> 				
+				</span>
+				<span class="title" style="padding-right:10px;"><strong>{$marketitem->getTitle($module_info->subject_cut_size)}</strong> <!--@if($marketitem->getCommentCount())--><em>[{$marketitem->getCommentCount()}]</em><!--@endif--></span>
+
+				<span class="price" style="float:right;margin-bottom:0px;margin-top:18px;margin-right:15px;font-size:1em;color:#000;font-weight:bold;" >￦ {($marketitem->getPrice(true))}</span>
+			
+				
+				<div style="float:right;margin-bottom:0px;margin-top:18px;margin-right:15px;">
+					<block cond=" ($marketitem->get('original_price') != NULL)">
+						<span style="text-decoration:line-through;font-size:1em;color:#535c67;font-weight:bold;">￦ {number_format($marketitem->get('original_price'))}</span>
+					</block>
+				</div>
+				
+
+				</div>
+			<div style="clear:both"></div>
+		</a>
+	</li>
+	<!--@end-->
+</ul>
+<div class="pn">
+	<!--@if($page != 1)-->
+	<a href="{getUrl('page',$page-1,'document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="prev">{$lang->cmd_prev}</a> 
+	<!--@endif-->
+	<strong>{$page} / {$page_navigation->last_page}</strong>
+	<!--@if($page != $page_navigation->last_page)-->
+	<a href="{getUrl('page',$page+1,'document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="next">{$lang->cmd_next}</a>
+	<!--@endif-->
+</div>
+

@@ -1,0 +1,228 @@
+<load target="marketplace.default.js" type="body" />
+<load target="default.css" />
+
+<!--xe icon load-->
+<load target="plugin/xe-icon/xeicon.css" />
+
+<!--carousel plugin load-->
+<load target="plugin/owl-carousel/owl.carousel.css" />
+<load target="plugin/owl-carousel/owl.theme.css" />
+<load target="plugin/owl-carousel/owl.carousel.js" type="body" />
+
+<!--relatedselects plugin load-->
+<load target="plugin/dependent-selects/jquery.dependent-selects.js" type="head" />
+
+<block cond="!$module_info->duration_new = (int)$module_info->duration_new">{@ $module_info->duration_new = 12 }</block>
+{@ $cate_list = array(); $current_key = null; }
+<!--@foreach($category_list as $key=>$val)-->
+	<!--@if(!$val->depth)-->
+		{@
+			$cate_list[$key] = $val;
+			$cate_list[$key]->children = array();
+			$current_key = $key;
+		}
+	<!--@elseif($current_key)-->
+		{@ $cate_list[$current_key]->children[] = $val }
+	<!--@end-->
+<!--@end-->
+{@
+    $_mypage_act = array("dispMarketplaceWrite", "dispMarketplaceNoticeWrite", "dispMarketplaceItemManage", "dispMarketplaceItemComments", "dispMarketplaceMemberModify","dispMarketplaceAdvertiseManage","dispMarketplaceAdvertiseLog","dispMarketplaceKeywordManage", "dispMarketplaceWishList");
+}
+<block cond="!in_array($act, $_mypage_act)">
+<div class="mp-box">
+    <div class="mp-sidebar mp-clearfix" style="width: 190px;">
+		<block cond="count($cate_list)">
+        <div class="" style="border-radius: 5px 5px 0px 0px; background-color:#262b31;padding:20px 25px 17px 20px" >
+			<span style="font-size:1.3em;color:#ffff;font-weight:bold;">카테고리</span>
+		</div>
+        <ul class="sidemenu card" style="border-radius:5px;">
+            <li class="active"|cond="!$category"><a  href="{getUrl('','mid',$mid)}">{$lang->total}</a></li>
+            <li loop="$cate_list=>$key,$val" class="active"|cond="$category==$val->category_srl || $category_list[$category]->parent_srl==$val->category_srl"><a  href="{getUrl(category,$val->category_srl,'document_srl','', 'page', '', 'act', '')}">{$val->title} ({$val->document_count})<!--<em cond="$val->document_count">[{$val->document_count}]</em>--></a>
+                <ul class="submenu" cond="count($val->children)">
+                    <li loop="$val->children=>$idx,$item" class="on_"|cond="$category==$item->category_srl"><a href="{getUrl(category,$item->category_srl,'document_srl','', 'page', '', 'act', '')}">{$item->title} ({$item->document_count})<!--<em cond="$val->document_count">[{$item->document_count}]</em>--></a></li>
+                </ul>
+            </li>
+
+			<block cond="$logged_info">
+            <li class="divider"></li>
+            <li><a href="{getUrl('', 'mid', $mid, 'act','dispMarketplaceWishList')}"><i class="xe-star"></i> 관심 상품 보기</a></li>
+            <li cond="$module_info->use_keyword_notify"><a href="{getUrl('','mid',$mid,'act','dispMarketplaceKeywordManage')}"><i class="xe-bell-ring"></i> 키워드 알림 설정</a></li>
+			</block>
+
+			<block cond="$grant->manager">
+			<li class="divider"></li>
+            <li><a href="{getUrl('act','dispMarketplaceAdminMarketplaceInfo')}"><strong><i class="xe-tool"></i> 마켓플레이스 모듈 설정</a></strong></li>
+			</block>
+        </ul>
+		</block>
+		
+		
+        <div class="option_selector card" style="border:0px;border-radius:5px;margin-top:20px;padding:0px;">
+			
+			<div class="" style="border-radius: 5px 5px 0px 0px;  background-color:#262b31;padding:20px 25px 17px 20px" >
+				<span style="font-size:1.3em;color:#ffff;font-weight:bold;">테니스 라켓 검색</span>
+			</div>
+			<form name="quick_search" action="{getUrl()}" method="get" no-error-return-url="true" style="padding:0px;">
+				<input type="hidden" name="mid" value="{$mid}" />
+				<input type="hidden" name="category" value="{$category}" />
+				<!--
+				<ul class="" style="margin-top:0px">
+                <li><strong>제품 구분</strong></li>
+				<li><label><input type="radio" name="item_condition" value="신상품" checked="checked"|cond="Context::get('item_condition') == '신상품'" /> 신상품</label></li></label></li>
+				<li><label><input type="radio" name="item_condition" value="행사" checked="checked"|cond="Context::get('item_condition') == '행사'" /> 행사</label></li></label></li>
+				</ul> -->
+			
+				<ul class="" style="margin:0px;">
+					<li class="" style="padding:10px 15px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">가격</a></li>
+					<li style="padding: 7px 10px 10px 15px;">
+					<input class="s_input" placeholder="최저" type="text" class="number" id="p_f" name="p_f" value="{number_format($p_f)}"|cond="$p_f" size="8" />
+					&nbsp-&nbsp
+					<input class="s_input" placeholder="최고" type="text" class="number" id="p_t" name="p_t" value="{number_format($p_t)}"|cond="$p_t" size="8" />
+					</li>
+				</ul>
+				
+				<ul class="" style="margin:0px;">
+					<li class="" style="padding:10px 15px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">헤드사이즈(L)</a></li>
+					<li style="padding: 7px 10px 10px 15px;">
+					<input class="s_input" placeholder="최저" type="text" class="number" id="h_f" name="h_f" value="{number_format($h_f)}"|cond="$h_f" size="8" />
+					&nbsp-&nbsp
+					<input class="s_input" placeholder="최고" type="text" class="number" id="h_t" name="h_t" value="{number_format($h_t)}"|cond="$h_t" size="8" />
+					</li>
+				</ul>
+				
+				<ul class="" style="margin:0px;">
+					<li class="" style="padding:10px 15px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">라켓무게(g)</a></li>
+					<li style="padding: 7px 10px 10px 15px;">
+					<input class="s_input" placeholder="최저" type="text" class="number" id="w_f" name="w_f" value="{number_format($w_f)}"|cond="$w_f" size="8" />
+					&nbsp-&nbsp
+					<input class="s_input" placeholder="최고" type="text" class="number" id="w_t" name="w_t" value="{number_format($w_t)}"|cond="$w_t" size="8" />
+					</li>
+				</ul>		
+				
+				<ul class="" style="margin:0px;">
+					<li class="" style="padding:10px 15px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">발란스(mm)</a></li>
+					<li style="padding: 7px 10px 10px 15px;">
+					<input class="s_input" placeholder="최저" type="text" class="number" id="b_f" name="b_f" value="{number_format($b_f)}"|cond="$b_f" size="8" />
+					&nbsp-&nbsp
+					<input class="s_input" placeholder="최고" type="text" class="number" id="b_t" name="b_t" value="{number_format($b_t)}"|cond="$b_t" size="8" />
+					</li>
+				</ul>
+				
+				<ul class="" style="margin:0px;">
+					<li class="" style="padding:10px 15px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">스트링패턴</a></li>
+					<li style="padding: 7px 10px 10px 40px;">
+					<input class="s_input" placeholder="" type="text" class="number" id="s_1" name="s_1" value="{number_format($s_1)}"|cond="$s_1" size="3" />
+					&nbspX&nbsp
+					<input class="s_input" placeholder="" type="text" class="number" id="s_2" name="s_2" value="{number_format($s_2)}"|cond="$s_2" size="3" />
+					</li>
+				</ul>
+				
+				<ul class="" style="margin:0px;">
+					<li class="" style="padding:10px 15px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">프레임두께(mm)</a></li>
+					<li style="padding: 7px 10px 10px 15px;">
+					<input class="s_input" placeholder="" type="text" class="" id="f_1" name="f_1" value="{($f_1)}"|cond="$f_1" size="3" />
+					&nbsp/&nbsp
+					<input class="s_input" placeholder="" type="text" class="" id="f_2" name="f_2" value="{($f_2)}"|cond="$f_2" size="3" />
+					&nbsp/&nbsp
+					<input class="s_input" placeholder="" type="text" class="" id="f_3" name="f_3" value="{($f_3)}"|cond="$f_3" size="3" />
+					</li>
+				</ul>
+				
+				<ul class="" style="margin:0px;">
+					<li class="" style="padding:10px 15px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">길이(inch)</a></li>
+					<li style="padding: 7px 10px 10px 15px;">
+					<input class="s_input" placeholder="최저" type="text" class="" id="l_f" name="l_f" value="{($l_f)}"|cond="$l_f" size="8" />
+					&nbsp-&nbsp
+					<input class="s_input" placeholder="최고" type="text" class="" id="l_t" name="l_t" value="{($l_t)}"|cond="$l_t" size="8" />
+					</li>
+				</ul>
+				
+				<ul class="" style="margin:0px;">
+					<li class="" style="padding:10px 15px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">그립사이즈</a></li>
+					<li style="padding: 10px 15px 5px 15px;"><label><input type="radio" name="g_s" value="1" checked="checked"|cond="Context::get('g_s') == '1'" /> G1 (4-1/8)</label></li></label></li>
+					<li style="padding: 5px 15px 5px 15px;"><label><input type="radio" name="g_s" value="2" checked="checked"|cond="Context::get('g_s') == '2'" /> G2 (4-1/4)</label></li></label></li>
+					<li style="padding: 5px 15px 5px 15px;"><label><input type="radio" name="g_s" value="3" checked="checked"|cond="Context::get('g_s') == '3'" /> G3 (4-3/8)</label></li></label></li>
+					<li style="padding: 5px 15px 15px 15px;"><label><input type="radio" name="g_s" value="4" checked="checked"|cond="Context::get('g_s') == '4'" /> G4 (4-1/2)</label></li></label></li>
+				</ul> 
+				
+				<input type="hidden" name="is_s" value="1" checked="checked" />
+				<input type="hidden" name="category" value="195" checked="checked" />
+
+				<ul class="" style="margin:0px;border-radius:5px;">
+					<li style="padding:10px 10px 20px 80px;background-color:#fff;border-radius:5px;">
+					<a style="text-decoration:none;padding:5px 10px;background:#5094e0" class="btn_secondary_round" href="javascript:quickSearchSubmit();"><span style="font-size:0.9em;color:#ffffff">라켓 맞춤 검색</span></a>
+					</li>
+				</ul> 
+			
+			
+				<!--<div class="btn_area">
+					<a href="javascript:quickSearchSubmit();" style="background-color:#5094e0;color:#fff">검색</a>
+					</div>
+				-->
+				<!--<a href="{getUrl('used_month','','price_from','','price_to','','priority_area','','item_condition','')}" /><i class="xe-repeat"></i> 선택해제
+				</a>-->
+			</form>
+        </div> 
+		
+		
+		<div class="card" style="height:90px;background-color:#fff;margin-top:20px;padding:20px;border-radius:5px;">
+			<img class="zbxe_widget_output" widget="counter_status" skin="sworld_counter" colorset="white" />
+		</div>
+		
+		
+		<div class="card" style="height:165px ;margin-top:20px">
+			<table cellpadding="0" cellspacing="0" width="100%"> <tr> <td style="border:1px solid #cecece;"><a href="https://map.naver.com/?mid=cf013495907" target="_blank"><img src="https://pspin.cafe24.com/print.png" width="100%"  alt="지도 크게 보기" title="지도 크게 보기" border="0" style="vertical-align:top;"/></a></td> </tr> <tr> <td> <table cellpadding="0" cellspacing="0" width="100%"> <tr> <td height="30" bgcolor="#f9f9f9" align="left" style="padding-left:9px; border-left:1px solid #cecece; border-bottom:1px solid #cecece;"> <span style="font-family: tahoma; font-size: 11px; color:#666;">2018.12.27</span>&nbsp;<span style="font-size: 11px; color:#e5e5e5;">|</span>&nbsp;<a style="font-family: dotum,sans-serif; font-size: 11px; color:#666; text-decoration: none; letter-spacing: -1px;" href="https://map.naver.com/?mid=cf013495907" target="_blank"><br>지도 크게 보기</a> </td> <td width="98" bgcolor="#f9f9f9" align="right" style="text-align:right; padding-right:9px; border-right:1px solid #cecece; border-bottom:1px solid #cecece;"> <span style="float:right;"><span style="font-size:9px; font-family:Verdana, sans-serif; color:#444;">&copy;&nbsp;</span>&nbsp;<a style="font-family:tahoma; font-size:9px; font-weight:bold; color:#2db400; text-decoration:none;" href="https://www.nhncorp.com" target="_blank">NAVER Corp.</a></span> </td> </tr> </table> </td> </tr> </table>
+		</div>
+		
+
+        <ul class="sidemenu mp-margin-top-20" style="padding-top:10px" cond="!count($cate_list) && $logged_info">
+            <li><a href="{getUrl('', 'mid', $mid, 'act','dispMarketplaceWishList')}"><i class="xe-star"></i> 관심 상품 보기</a></li>
+            <li cond="$module_info->use_keyword_notify"><a href="{getUrl('','mid',$mid,'act','dispMarketplaceKeywordManage')}"><i class="xe-bell-ring"></i> 키워드 알림 설정</a></li>
+			<block cond="$grant->manager">
+			<li class="divider"></li>
+            <li><a href="{getUrl('act','dispMarketplaceAdminMarketplaceInfo')}"><strong><i class="xe-tool"></i> 마켓플레이스 모듈 설정</a></strong></li>
+			</block>
+        </ul>
+
+		<div class="mp-margin-top-25" cond="$module_info->mainbanner">
+			<!--일반 배너-->
+			<img src="{$module_info->mainbanner}" style="width:215px" cond="!$module_info->mainbanner_link" />
+			<!--링크 배너-->
+			<a href="{$module_info->mainbanner_link}" target="{$module_info->mainbanner_target}" cond="$module_info->mainbanner_link"><img src="{$module_info->mainbanner}" style="width:215px" /></a>
+		</div>
+    </div>
+	
+	
+
+	{$module_info->header_text}
+</block>
+
+<block cond="in_array($act, $_mypage_act)">
+<div class="mp-box ">
+    <div class="mp-sidebar sidebar-insert-page card">
+        
+        <ul class="sidemenu">
+			<block cond="$grant->manager">
+				<li class="active"|cond="$act=='dispMarketplaceWrite'"><a href="{getUrl('','mid',$mid,'act','dispMarketplaceWrite')}"><i class="xe-photo-camera-a"></i> 내 상품 등록</a></li>
+				<li class="active"|cond="$act=='dispMarketplaceItemManage'"><a href="{getUrl('','mid',$mid,'act','dispMarketplaceItemManage')}"><i class="xe-archive"></i> 내 상품 관리</a></li>
+				<li class="active"|cond="$act=='dispMarketplaceItemComments'"><a href="{getUrl('','mid',$mid,'act','dispMarketplaceItemComments')}"><i class="xe-message-bubble"></i> 내 상품에 달린 댓글</a></li>
+			</block>
+            <li class="active"|cond="$act=='dispMarketplaceWishList'"><a href="{getUrl('','mid',$mid,'act','dispMarketplaceWishList')}"><i class="xe-star"></i> 내 관심 상품 보기</a></li>
+        </ul>
+
+		<block cond="$module_info->use_advertise">
+        <ul class="sidemenu">
+            <li class="active"|cond="$act=='dispMarketplaceAdvertiseManage'"><a href="{getUrl('','mid',$mid,'act','dispMarketplaceAdvertiseManage')}">게시중인 프리미엄 상품</a></li>
+		</ul>
+		</block>
+
+		<block cond="$module_info->use_keyword_notify">
+        <ul class="sidemenu">
+            <li class="active"|cond="$act=='dispMarketplaceKeywordManage'"><a href="{getUrl('','mid',$mid,'act','dispMarketplaceKeywordManage')}">장터 키워드 알림 설정</a></li>
+        </ul>
+		</block>
+	
+	</div>
+
+</block>
+

@@ -1,0 +1,189 @@
+<load target="default.css" />
+<load target="plugin/xe-icon/xeicon.css" />
+<load target="marketplace.default.js" type="body" />
+
+<!--relatedselects plugin load-->
+<load target="plugin/dependent-selects/jquery.dependent-selects.js" type="head" />
+
+<div class="mp-box mp-popup-box">
+<form action="./" method="post" class="mp-form-insert">
+    <input type="hidden" name="act" value="procMarketplaceItemModify" />
+    <input type="hidden" name="mid" value="{$mid}" />
+	<input type="hidden" name="content" value="" />
+	<input type="hidden" name="document_srl" value="{$document_srl}" />
+
+		<div class="mp-content">
+			<div class="content_header">
+				<div class="mp-title-modify-item mp-hidetext">내 상품 등록</div>
+				<a href="javascript:window.close();" class="mp-button button-white button-small button-return"><i class="xe-close"></i> 창 닫기</a>
+			</div>
+		   <div class="mp-notice"><i class="xe-announce"> 판매중인 상품의 상품 정보를 수정하실 수 있습니다.</i></div>
+
+			<div class="mp-block" style="padding: 0 10px;">
+				<div class="mp-block">
+				
+				<!--
+					<section class="mp-section">
+						<label class="mp-label">물품 대표 사진 등록</label>	
+						
+						<input name="thumbnail[3]" id="thumbnail[3]" class="mp-input input-full" type="file" size="1"  />
+					</section>-->
+					<div hidden>
+                    <section class="mp-section" cond="$module_info->hide_category=='N'" >
+                      <label class="mp-label">상품 카테고리</label>			
+                        <select name="category_srl" class="mp-input mp-dependent">
+                            <option value="">{$lang->category}</option>
+                            <block loop="$category_list => $val">
+                            {@ 
+                                if($val->child_count) $_parent_text[$val->category_srl] = $_parent_text[$val->parent_srl].$val->title." || ";
+                            }
+                            <option disabled="disabled"|cond="!$val->grant" value="{$val->category_srl}" selected="selected"|cond="$val->grant&&$val->selected||$val->category_srl==$oMarketItem->get('category_srl')" cond="!$val->child_count" >
+                                {$_parent_text[$val->parent_srl]}{$val->title}
+                            </option>
+                            </block>
+                        </select>
+                    </section>
+                    <script>
+                    jQuery('.mp-dependent').dependentSelects({
+                        separator: ' || ', 
+                        placeholderOption: '선택',
+                        class: 'mp-input mp-dependent'
+                    });
+                    </script>
+					</div>
+					
+                    <section class="mp-section">
+                        <label for="item_name" class="mp-label">판매 상품명 <small>(*검색용)</small></label>
+                        <input id="item_name" type="text" value="{$oMarketItem->get('product_name')}" name="item_name" class="mp-input input-full">
+                        <p class="description">상품명만 입력하시기 바랍니다. (예. 아이패드 셀룰러 16GB, 캐논 60D)</p>
+                    </section>
+					
+					 
+
+                    <section class="mp-section">
+                      <label for="item_price" class="mp-label">판매 가격</label>
+                      <input id="item_price" type="text" value="{number_format($oMarketItem->get('price'))}" name="item_price" class="mp-input number"> 원 <span id="item_price_ko"></span>
+                    </section>
+					
+					<section class="mp-section">
+						<label for="item_original_price" class="mp-label">정상 가격 </label>
+						<input id="item_original_price" type="text" value="{$oMarketItem->get('original_price')}" name="item_original_price" class="mp-input number"> 원
+					</section>
+
+					<section class="mp-section">
+                        <label for="item_condition" class="mp-label">행사 문구<small>(사진 왼쪽 위에 뜨는 문구)</small></label>
+                        <input id="item_condition" type="text" value="{$oMarketItem->get('item_condition')}" name="item_condition" class="mp-input input-full">
+                        <p class="description"> </p>
+                    </section>
+					
+					<section class="mp-section">
+						<label for="priority_area" class="mp-label">추가 설명(택배비)</label>
+						<input id="priority_area" type="text" value="{$oMarketItem->get('priority_area')}" name="priority_area" class="mp-input input-full">
+					</section>
+					
+					<section class="mp-section">
+						<label for="seller_contact" class="mp-label">중고싸다 링크</label>
+						<input id="seller_contact" type="text" value="{$oMarketItem->get('seller_contact')}" name="seller_contact" class="mp-input input-full">
+					</section>
+					
+					<section class="mp-section">
+						<label for="size1" class="mp-label">헤드 사이즈(L) </label>
+						<input id="size1" type="text" value="{$oMarketItem->get('size1')}" name="size1" class="mp-input">
+					</section>
+					
+					<section class="mp-section">
+                        <label for="item_used_month" class="mp-label">라켓무게(g) <small></small></label>
+                        <input id="item_used_month" type="text" value="{$oMarketItem->get('used_month')}" name="item_used_month" class="mp-input input-full">
+                        <p class="description"> </p>
+                    </section>
+					
+					<section class="mp-section">
+						<label for="size2" class="mp-label">발란스(mm) </label>
+						<input id="size2" type="text" value="{$oMarketItem->get('size2')}" name="size2" class="mp-input">
+					</section>
+					
+					<section class="mp-section">
+						<label for="" class="mp-label">스트링패턴 </label>
+						<input id="string1" type="text" value="{$oMarketItem->get('string1')}" name="string1" class="mp-input">
+						<input id="string2" type="text" value="{$oMarketItem->get('string2')}" name="string2" class="mp-input">
+					</section>
+					
+					<section class="mp-section">
+						<label for="" class="mp-label">프레임두께(mm) </label>
+						<input id="frame1" type="text" value="{$oMarketItem->get('frame1')}" name="frame1" class="mp-input">
+						<input id="frame2" type="text" value="{$oMarketItem->get('frame2')}" name="frame2" class="mp-input">
+						<input id="frame3" type="text" value="{$oMarketItem->get('frame3')}" name="frame3" class="mp-input">
+					</section>
+					
+					<section class="mp-section">
+						<label for="length" class="mp-label">길이(inch) </label>
+						<input id="length" type="text" value="{$oMarketItem->get('length')}" name="length" class="mp-input">
+					</section>
+					
+					<section class="mp-section">
+						<label for="" class="mp-label">그립사이즈 </label>
+						<input id="g_size" type="radio" value="1" name="g_size" checked="checked"|cond="$oMarketItem->get('g_size') == '1'"> G1 4-1/8
+						<input id="g_size" type="radio" value="2" name="g_size" checked="checked"|cond="$oMarketItem->get('g_size') == '2'"> G2 4-1/4
+						<input id="g_size" type="radio" value="3" name="g_size" checked="checked"|cond="$oMarketItem->get('g_size') == '3'"> G3 4-3/8
+						<input id="g_size" type="radio" value="4" name="g_size" checked="checked"|cond="$oMarketItem->get('g_size') == '4'"> G4 4-1/2
+					</section>
+					
+					
+					<!--
+                    <div class="mp-block">
+                        <section class="mp-section">
+                            <label for="item_condition" class="mp-label"><strong>제품 구분</strong></label>
+                            <select name="item_condition" id="item_condition" class="mp-input">
+								<option value="{$condition->eid}" loop="$condition_list => $condition" selected="selected"|cond="$oMarketItem->get('item_condition') == $condition->eid">{$condition->name}</option>
+                            </select>
+                        </section>
+
+                        <section class="mp-section">
+                            <label for="item_original_price" class="mp-label">구매 가격</label>
+                            <input id="item_original_price" type="text" value="{$oMarketItem->get('original_price')}"|cond="$oMarketItem->get('original_price')" name="item_original_price" class="mp-input number"> 원
+                        </section>
+						
+                        <section class="mp-section">
+                          <label for="item_used_month" class="mp-label">사용 기간</label>
+							{@
+								$used_month=array();
+								for($i=1;$i<=24;$i++) $used_month[] = $i;
+							}
+                            <select id="item_used_month" name="item_used_month" class="mp-input">
+                                <option value="0" selected="selected"|cond="!$oMarketItem->get('used_month')">미개봉</option>
+                                <option value="{$val}" loop="$used_month => $val"  selected="selected"|cond="$oMarketItem->get('used_month') == $val">{$val}개월</option>
+                                <option value="25" selected="selected"|cond="$oMarketItem->get('used_month') >= 25">24개월 이상</option>
+                            </select> 
+                        </section>
+                    </div>-->
+
+					<!--
+                    <div class="mp-block">
+
+                        <section class="mp-section">
+                          <label class="mp-label">거래 방법</label>		
+                            <label><input type="checkbox" name="item_delivery" value="Y" checked="checked"|cond="$oMarketItem->get('delivery')=='Y'"  /> 택배거래</label> <label><input type="checkbox" name="item_direct_dealing" value="Y"  checked="checked"|cond="$oMarketItem->get('direct_dealing')=='Y'" /> 직거래</label> <label><input type="checkbox" name="item_safe_dealing" value="Y" checked="checked"|cond="$oMarketItem->get('safe_dealing')=='Y'"  /> 안전거래</label>
+                        </section>
+
+                        
+                        <script>
+                        jQuery('.mp-district').dependentSelects({
+                            separator: ' ', 
+                            placeholderOption: '선택',
+                            class: 'mp-input mp-district'
+                        });
+                        </script>
+                    </div>
+-->
+					<div class="btnArea">
+						<input type="submit" value="{$lang->cmd_registration}" class="btn" />
+					</div>	
+
+				</div>
+			</div>
+
+		</div>
+		<div class="mp-clearfix"></div>
+
+</form>
+</div>
