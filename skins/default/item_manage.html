@@ -12,7 +12,8 @@ xe.lang.ask_change_selling = '{$lang->ask_change_selling}';
 			<ul class="board_tab">
 			<li class="active"|cond="!$item_status"><a href="{getUrl('','mid',$mid,'act','dispMarketplaceItemManage')}">전체({$total_count})</a></li>
 			<li class="active"|cond="$item_status == 'selling'"><a href="{getUrl('act','dispMarketplaceItemManage','item_status','selling')}">판매중 상품({$selling_count})</a></li>
-			<li class="active"|cond="$item_status == 'cancel'"><a href="{getUrl('act','dispMarketplaceItemManage','item_status','cancel')}">판매중단 상품({$cancel_count})</a></li>
+			<li class="active"|cond="$item_status == 'soldout'"><a href="{getUrl('act','dispMarketplaceItemManage','item_status','soldout')}">품절 상품({$soldout_count})</a></li>
+			<!--<li class="active"|cond="$item_status == 'cancel'"><a href="{getUrl('act','dispMarketplaceItemManage','item_status','cancel')}">판매중단 상품({$cancel_count})</a></li>-->
 			
 			</ul>
 	
@@ -70,8 +71,8 @@ xe.lang.ask_change_selling = '{$lang->ask_change_selling}';
 							<!-- 프리미엄 광고 관리 -->
 							<block cond="$document->isSelling()">
 							<a onclick="popopen(this.href); return false;" href="{getUrl('act','dispMarketplaceAdvertiseInsert','document_srl',$document->document_srl)}" class="btn_action btn_action_yellow" cond="$module_info->use_advertise && !$document->isAdvertise()"><i class="xe-tree" ></i> 프리미엄 상품 등록하기</a> <span href="{getUrl('act','dispMarketplaceAdvertiseManage')}" class="btn_action" style="background:#5D6872;color:#fff" cond="$document->isAdvertise()"><i class="xe-leaf" ></i> 프리미엄 상품 게시중 </span>
-							<!--<a href="javascript:doChangeItemStatus({$document->document_srl},'soldout');" class="btn_action"><i class="xe-status-check"></i> 품절 처리</a>-->
-							<a href="javascript:doChangeItemStatus({$document->document_srl},'cancel');" class="btn_action"><i class="xe-close-circle"></i> 판매 중단</a>
+							<a href="javascript:doChangeItemStatus({$document->document_srl},'soldout');" class="btn_action"><i class="xe-status-check"></i> 품절 처리</a>
+							<!--<a href="javascript:doChangeItemStatus({$document->document_srl},'cancel');" class="btn_action"><i class="xe-close-circle"></i> 판매 중단</a>-->
 							</block>
 							<block cond="$document->get('item_status')!='selling'">
 							이 상품은 <strong class="{$document->get('item_status')}">{$lang->item_status[$document->get('item_status')]}</strong> 되었습니다. <a href="javascript:doChangeItemStatus({$document->document_srl},'selling');" class="btn_action btn_action_none"><i class="xe-rotate-left"></i> 다시판매</a> 

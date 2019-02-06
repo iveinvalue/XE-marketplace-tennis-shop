@@ -18,22 +18,30 @@
 <img src="{$val}" loop="$thumbnails => $val" />-->
 
 
+<dl class="xv">
+	<dt><span class="label">미리보기</span></dt>
+	{@ 
+		$thumbnails = $oMarketItem->getThumbnailsObject(160,160);
+		$big_thumb = $thumbnails[0];
+	}
+	<img class="mainbox" src="{$big_thumb->thumbnail_url}" height="70px" width="70px" />
+	<img class="mainbox" src="{$thumbnails[1]->thumbnail_url}" height="70px" width="70px" />
+	<img class="mainbox" src="{$thumbnails[2]->thumbnail_url}" height="70px" width="70px" />
+	<img class="mainbox" src="{$thumbnails[3]->thumbnail_url}" height="70px" width="70px" />
+</dl>
+
+
 <dl class="xv" cond="!$oMarketItem->isNotice()">
-
-	<div class="itm_code" style="margin-top:10px;margin-bottom:10px">계좌번호 : 국민은행 629302-95-106134 박현창 </div>
-	<br>
-	<div class="itm_code" style="margin-top:0px;margin-bottom:0px">박코치 : 010-3706-2477 | 031-552-2999</div>
-
 	<dt><span class="label">제품명</span></dt>
-	<dd>{$oMarketItem->get('product_name')}</dd>
-
-					
+	<dd>{$oMarketItem->get('product_name')}</dd>		
+	
 	<block cond="($oMarketItem->get('used_month') != 0)">
-	<dt><span class="label">라켓 무게</span></dt>
-	<dd>{$oMarketItem->get('used_month')}</dd>
+		<dt><span class="label">제품사양</span></dt>
+		<dd>
+		{$oMarketItem->get('size1')} / {$oMarketItem->get('used_month')}g / {$oMarketItem->get('size2')}mm / {$oMarketItem->get('string1')}X{$oMarketItem->get('string2')} / {$oMarketItem->get('frame1')}-{$oMarketItem->get('frame2')}-{$oMarketItem->get('frame3')}mm / {$oMarketItem->get('length')}in / G{$oMarketItem->get('g_size')}
+		</dd>
 	</block>
-						
-					
+
 	<!-- /Extra Output -->
 	<block cond=" ($oMarketItem->get('original_price') != NULL)">
 	<dt><span class="label">정상 가격</span></dt>
@@ -41,9 +49,29 @@
 	</block>
 					
 	<dt><span class="label">판매 가격</span></dt>
-	<dd class="price" style="font-size:1.5em;">{number_format($oMarketItem->get('price'))}<small>원</small></dd>
+	<dd class="price" style="font-size:1.5em;color:#ed6464;font-weight:bold">{number_format($oMarketItem->get('price'))}<small>원</small></dd>
 
+	<dt><span class="label">추가 설명</span></dt>
+	<dd>{$oMarketItem->get('priority_area')}</dd>
 
+	<br>
+	<div class="itm_code" style="margin-top:10px;margin-bottom:10px">계좌번호: 국민은행 629302-95-106134 박현창 </div>
+	<br>
+	<div class="itm_code" style="margin-top:0px;margin-bottom:0px">박코치: 010-3706-2477 | 031-552-2999</div>
+	
+	<br>
+	<br>
+	<br>
+	<a style="text-decoration:none;margin-right:10px;padding:15px 25px;background:#f5525b" class="" href="javascript:popupOpen();">
+		<span style="font-size:1.2em;color:#ffffff">구매하기</span>
+	</a>
+	<block cond="($oMarketItem->get('seller_contact') != null)">
+		<a style="text-decoration:none;margin-right:10px;padding:15px 25px;background:#747cfd" class="" href="{$oMarketItem->get('seller_contact')}" target="_blank">
+			<span style="font-size:1.2em;color:#ffffff">중고싸다 이동</span>
+		</a>
+	</block>
+	<br>
+	<br>
 	
 	<!--@if($oDocument->isExtraVarsExists())-->
 	<!--@foreach($_extra_vars as $key => $val)-->
@@ -51,10 +79,22 @@
 		<dd>{$val->getValueHTML()}</dd>
 	<!--@end-->
 	<!--@end-->
+
 </dl>
 
+<script type="text/javascript">
 
+function popupOpen(){
+	alert("박코치: 010-3706-2477, 031-552-2999");
+}
+</script>
+
+
+<dl class="xv">
+<dt><span class="label">상세 설명</span></dt>
 {$oDocument->getContent(false)}
+</dl>
+
 
 </div>
 <div id="skip_co"></div>

@@ -42,7 +42,7 @@
 					<!--@if(!$comment->isAccessible())-->
 					<form action="./" method="get" class="xe_content" onsubmit="return procFilter(this, input_password)">
 						<p><label for="cpw_{$comment->comment_srl}">{$lang->msg_is_secret} {$lang->msg_input_password}</label></p>
-						<p><input type="password" name="password" id="cpw_{$comment->comment_srl}" class="iText" /><input type="submit" class="btn" value="{$lang->cmd_input}" /></p>
+						<p cond="$comment->getNickName()!='topspin'"><input type="password" name="password" id="cpw_{$comment->comment_srl}" class="iText s_input" />&nbsp<input type="submit" class="btn" value="{$lang->cmd_input}" /></p>
 						<input type="hidden" name="mid" value="{$mid}" />
 						<input type="hidden" name="page" value="{$page}" />
 						<input type="hidden" name="document_srl" value="{$comment->get('document_srl')}" />
@@ -107,10 +107,15 @@
 							<label for="password" title="{$lang->password}"><i class="xe-lock"></i><span class="blind">{$lang->password}</span></label>
 							<input name="password" class="text-input" id="password" placeholder="{$lang->password}" type="password">
 						</div>
+						<!--
 						<div class="cmt_user_form">
 							<label for="url" title="홈페이지"><i class="xe-link-l"></i><span class="blind">{$lang->homepage}</span></label>
 							<input name="homepage" class="text-input" id="url" placeholder="{$lang->homepage}" type="text">
-						</div>
+						</div>-->
+					</div>
+					<div class="secret_box" style="display:inline-block">
+						<input id="cmt_write_secret" name="is_secret" value="Y" type="hidden">
+						<!--<label for="cmt_write_secret">{$lang->secret}</label> -->
 					</div>
 				</div>
 
@@ -151,20 +156,22 @@
 							<label for="password" title="{$lang->password}"><i class="xe-lock"></i><span class="blind">{$lang->password}</span></label>
 							<input name="password" class="text-input" id="password" placeholder="{$lang->password}" type="password">
 						</div>
+						<!--
 						<div class="cmt_user_form">
 							<label for="url" title="홈페이지"><i class="xe-link-l"></i><span class="blind">{$lang->homepage}</span></label>
 							<input name="homepage" class="text-input" id="url" placeholder="{$lang->homepage}" type="text">
-						</div>
+						</div>-->
 					</div>
 					<!-- [D] 비밀글 쓰기 설정 시 노출 -->
 					<div class="secret_box" style="display:inline-block">
-						<input id="cmt_write_secret" name="is_secret" value="Y" type="checkbox">
-						<label for="cmt_write_secret">{$lang->secret}</label> 
+						<input id="cmt_write_secret" name="is_secret" value="Y" type="hidden">
+						<!--<label for="cmt_write_secret">{$lang->secret}</label> -->
 					</div>
+					<!--
 					<div class="secret_box" style="display:inline-block" cond="$is_logged">
 						<input id="cmt_notify_message" name="notify_message" value="Y" type="checkbox">
 						<label for="cmt_notify_message">{$lang->notify}</label> 
-					</div>
+					</div>-->
 				</div>
 				<div class="cmt_submit">
 		            <input type="image" alt="등록" src="images/btn_registry.gif" />

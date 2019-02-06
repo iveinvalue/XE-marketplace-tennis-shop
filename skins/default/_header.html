@@ -31,17 +31,26 @@
 <block cond="!in_array($act, $_mypage_act)">
 <div class="mp-box">
     <div class="mp-sidebar mp-clearfix" style="width: 190px;">
+
 		<block cond="count($cate_list)">
-        <div class="" style="border-radius: 5px 5px 0px 0px; background-color:#262b31;padding:20px 25px 17px 20px" >
+        <div class="" style="border-radius: 5px 5px 0px 0px; background-color:#152133;padding:20px 25px 17px 20px" >
 			<span style="font-size:1.3em;color:#ffff;font-weight:bold;">카테고리</span>
 		</div>
         <ul class="sidemenu card" style="border-radius:5px;">
             <li class="active"|cond="!$category"><a  href="{getUrl('','mid',$mid)}">{$lang->total}</a></li>
-            <li loop="$cate_list=>$key,$val" class="active"|cond="$category==$val->category_srl || $category_list[$category]->parent_srl==$val->category_srl"><a  href="{getUrl(category,$val->category_srl,'document_srl','', 'page', '', 'act', '')}">{$val->title} ({$val->document_count})<!--<em cond="$val->document_count">[{$val->document_count}]</em>--></a>
+            <li loop="$cate_list=>$key,$val" class="active"|cond="$category==$val->category_srl || $category_list[$category]->parent_srl==$val->category_srl || $category_list[$category]->parent_srl->parent_srl==$val->category_srl">
+				<a  href="{getUrl(category,$val->category_srl,'document_srl','', 'page', '', 'act', '')}">{$val->title} ({$val->document_count})<!--<em cond="$val->document_count">[{$val->document_count}]</em>--></a>
                 <ul class="submenu" cond="count($val->children)">
-                    <li loop="$val->children=>$idx,$item" class="on_"|cond="$category==$item->category_srl"><a href="{getUrl(category,$item->category_srl,'document_srl','', 'page', '', 'act', '')}">{$item->title} ({$item->document_count})<!--<em cond="$val->document_count">[{$item->document_count}]</em>--></a></li>
+                    <li loop="$val->children=>$idx,$item" class="on_"|cond="$category==$item->category_srl">
+						<!--<a href="{getUrl(category,$item->category_srl,'document_srl','', 'page', '', 'act', '')}">{$item->title} ({$item->document_count})</a>-->
+						<a cond="$item->depth==1"  href="{getUrl(category,$item->category_srl,'document_srl','', 'page', '', 'act', '')}">{$item->title} ({$item->document_count})<!--<em cond="$val->document_count">[{$val->document_count}]</em>--></a>
+						<a cond="$item->depth==2"  href="{getUrl(category,$item->category_srl,'document_srl','', 'page', '', 'act', '')}">&nbsp&nbspㄴ&nbsp{$item->title} ({$item->document_count})<!--<em cond="$val->document_count">[{$val->document_count}]</em>--></a>
+						
+					</li>
                 </ul>
             </li>
+			
+
 
 			<block cond="$logged_info">
             <li class="divider"></li>
@@ -55,12 +64,15 @@
 			</block>
         </ul>
 		</block>
+
+		
+		
 		
 		
         <div class="option_selector card" style="border:0px;border-radius:5px;margin-top:20px;padding:0px;">
-			
-			<div class="" style="border-radius: 5px 5px 0px 0px;  background-color:#262b31;padding:20px 25px 17px 20px" >
-				<span style="font-size:1.3em;color:#ffff;font-weight:bold;">라켓 맞춤 검색</span>
+			<a name="my_serach"></a>
+			<div class="" style="border-radius: 5px 5px 0px 0px;  background-color:#152133;padding:20px 25px 17px 20px" >
+				<span style="font-size:1.3em;color:#ffff;font-weight:bold;">내 라켓 찾기</span>
 			</div>
 			<form name="quick_search" action="{getUrl()}" method="get" no-error-return-url="true" style="padding:0px;">
 				<input type="hidden" name="mid" value="{$mid}" />
@@ -149,8 +161,8 @@
 				<input type="hidden" name="category" value="195" checked="checked" />
 
 				<ul class="" style="margin:0px;border-radius:5px;">
-					<li style="padding:10px 10px 20px 80px;background-color:#fff;border-radius:5px;">
-					<a style="text-decoration:none;padding:5px 10px;background:#5094e0" class="btn_secondary_round" href="javascript:quickSearchSubmit();"><span style="font-size:0.9em;color:#ffffff">라켓 맞춤 검색</span></a>
+					<li style="padding:10px 10px 20px 130px;background-color:#fff;border-radius:5px;">
+					<a style="text-decoration:none;padding:5px 10px;background:#5094e0" class="btn_secondary_round" href="javascript:quickSearchSubmit();"><span style="font-size:0.9em;color:#ffffff">검색</span></a>
 					</li>
 				</ul> 
 			
@@ -163,7 +175,15 @@
 				</a>-->
 			</form>
         </div> 
-		
+
+		<div class="option_selector card" style="border:0px;border-radius:5px;margin-top:20px;padding:0px;">
+			<div class="" style="border-radius: 5px 5px 0px 0px;  background-color:#152133;padding:20px 25px 17px 20px" >
+				<span style="font-size:1.3em;color:#ffff;font-weight:bold;">신발 통큰 행사</span>
+			</div>
+			<a href="http://topspin.co.kr/index.php?mid=home&category=212&document_srl=4706" >
+				<div style="height:252px;border-radius: 0px 0px 5px 5px;padding-top: 0px; font-size: 13px;" class=" back_b3" ></div>
+			</a>
+		</div>
 		
 		<div class="card" style="height:90px;background-color:#fff;margin-top:20px;padding:20px;border-radius:5px;">
 			<img class="zbxe_widget_output" widget="counter_status" skin="sworld_counter" colorset="white" />

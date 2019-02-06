@@ -19,6 +19,11 @@ background-image: url( "banner/img2.png" );
 background-size: contain;
 }
 
+.back_b3 { 
+background-image: url( "banner/img3.jpg" );
+background-size: contain;
+}
+
 .titlee2 { 
 
 /* 여러 줄 자르기 추가 스타일 */ 

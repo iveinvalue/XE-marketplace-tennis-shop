@@ -93,7 +93,7 @@ xe.lang.ask_change_selling = '{$lang->ask_change_selling}';
 					<block cond="($oMarketItem->get('used_month') != 0)">
 						<tr>
 							<td><span class="label">제품사양</span></td>
-							<td>{$oMarketItem->get('size1')} / {$oMarketItem->get('used_month')}g / {$oMarketItem->get('size2')}mm / {$oMarketItem->get('string1')}X{$oMarketItem->get('string2')} / {$oMarketItem->get('frame1')},{$oMarketItem->get('frame2')},{$oMarketItem->get('frame3')}mm / {$oMarketItem->get('length')}in / G{$oMarketItem->get('g_size')}
+							<td>{$oMarketItem->get('size1')} / {$oMarketItem->get('used_month')}g / {$oMarketItem->get('size2')}mm / {$oMarketItem->get('string1')}X{$oMarketItem->get('string2')} / {$oMarketItem->get('frame1')}-{$oMarketItem->get('frame2')}-{$oMarketItem->get('frame3')}mm / {$oMarketItem->get('length')}in / G{$oMarketItem->get('g_size')}
 							</td>
 						</tr>
 					</block>
@@ -152,15 +152,16 @@ xe.lang.ask_change_selling = '{$lang->ask_change_selling}';
 					<span style="font-size:1.2em;color:#ffffff">중고싸다 이동</span>
 				</a>
 				</block>
+				<!--
 				<block cond="$oMarketItem->isWishItem()">
 					<a style="text-decoration:none;padding:15px 25px;background:#faae5c" class="btn_secondary_round" href="javascript:doToggleWishItem('{$oMarketItem->document_srl}');"><span style="font-size:1em;color:#000">찜하기 취소</span></a>
 				</block>
 				<block cond="!$oMarketItem->isWishItem()">
 					<a style="text-decoration:none;padding:15px 25px;background:#faae5c" class="btn_secondary_round" href="javascript:doToggleWishItem('{$oMarketItem->document_srl}');"><span style="font-size:1em;color:#000">찜하기</span></a>
-				</block>
+				</block>-->
 				<div class="contact_number">
 					<img class="callout" src="images/callout.gif" />
-					<strong>문의하세요.</strong>
+					<strong>위 연락처로 문의하세요.</strong>
 				</div>
 			</div>
 			
@@ -181,7 +182,7 @@ xe.lang.ask_change_selling = '{$lang->ask_change_selling}';
 	<div class="read_content card2" style="margin-top:20px;padding:20px;border-radius:5px;background-color:#fff;">
 		{$oMarketItem->getContent(false)}
 		<!-- 판매자용 상품 관리 버튼 -->
-		<block cond="$oMarketItem->isEditable() && $oMarketItem->isSelling()">
+		<block cond="$oMarketItem->isEditable() ">
 		<div class="lst_header contrlbox_header">
 			<h3 class="lst_tit"><i class="xe-tool"></i> 판매자 상품 관리</h3>
 		</div>
@@ -202,13 +203,29 @@ xe.lang.ask_change_selling = '{$lang->ask_change_selling}';
 					</a>
 					<p class="btn_dscription">상세 설명을 수정할 수 있습니다.</p>
 				</li>
+				<li cond="$module_info->item_modify && $module_info->item_modify !== 'N' && $oMarketItem->isSelling()">
+					<a href="javascript:doChangeItemStatus({$oMarketItem->document_srl},'soldout');" class="btn_default">
+					<i class="xe-icon xe-pencil-point"></i>
+					<p class="btn_txt">품절</p>
+					</a>
+					<p class="btn_dscription">품절</p>
+				</li>
+				<li cond="$module_info->item_modify && $module_info->item_modify !== 'N' && $oMarketItem->isSoldout()">
+					<a href="javascript:doChangeItemStatus({$oMarketItem->document_srl},'selling');" class="btn_default">
+					<i class="xe-icon xe-pencil-point"></i>
+					<p class="btn_txt">다시판매</p>
+					</a>
+					<p class="btn_dscription">다시판매</p>
+				</li>
+				<!--
 				<li cond="$module_info->item_modify && $module_info->item_modify !== 'N'">
 					<a href="javascript:doChangeItemStatus({$oMarketItem->document_srl},'cancel');" class="btn_default">
 					<i class="xe-icon xe-pencil-point"></i>
 					<p class="btn_txt">판매 중단</p>
 					</a>
 					<p class="btn_dscription">판매 중단</p>
-				</li>
+				</li>-->
+				
 				<li cond="$module_info->item_modify && $module_info->item_modify !== 'N'">
 					<a onclick="popopen(this.href, 'popup'); return false;" href="{getUrl('', 'module', 'marketplace', 'act', 'dispMarketplaceDelete', 'document_srl', $oMarketItem->document_srl)}" class="btn_default">
 					<i class="xe-icon xe-pencil-point"></i>
@@ -221,13 +238,11 @@ xe.lang.ask_change_selling = '{$lang->ask_change_selling}';
 				<br>
 
 				<li cond="$module_info->item_modify && $module_info->item_modify !== 'N'">
-					<block cond="$oMarketItem->isSelling()">
 					<a onclick="popopen(this.href, 'popup'); return false;" href="{getUrl('act','dispMarketplaceAdvertiseInsert','document_srl',$oMarketItem->document_srl)}" class="btn_default">
 					<i class="xe-icon xe-pencil-point"></i>
 					<p class="btn_txt">프리미엄 <br> 등록/수정</p>
 					</a>
 					<p class="btn_dscription">프리미엄 상품 관리</p>
-					</block>
 				</li>
 				
 				<li cond="$module_info->item_modify && $module_info->item_modify !== 'N'">
