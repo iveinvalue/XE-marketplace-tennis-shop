@@ -254,7 +254,7 @@ font-weight:bold;
   box-shadow: 0px 2px 5px #a4a4a4;
   z-index: 999; }
 .mp-box .mp-sidebar .sidemenu .submenu li {
-  min-width: 175px; }
+  min-width: 200px; }
 .mp-box .mp-sidebar .sidemenu .submenu li:hover {
   background-color: #f3f3f3; }
 .mp-box .mp-sidebar .sidemenu .submenu li a {

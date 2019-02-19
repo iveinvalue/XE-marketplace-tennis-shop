@@ -243,7 +243,55 @@
 	.hover_info a.btn_show{text-decoration:none !important;}
 }
 
+/* searchbox */
+.mp-searchbox {
+	position:relative;
 
+	input[type=text]{
+		font-size: 14px;
+		border:2px solid #00a8e6;
+		padding: 9px 70px 9px 24px;
+		height:55px;
+		width:320px;
+		box-sizing:border-box;
+		transition: all 0.3s ease-in-out;-webkit-transition: all 0.3s ease-in-out
+	}
+	input[type=text]:focus {width:345px;border-color:#00a8e6}
+	input[type=submit]{
+		position:absolute;
+		right:0;
+		top:0;
+		margin: 0;
+		height: 55px;
+		width: 60px;
+		border: 0;
+		background:url('images/button_search.gif') no-repeat;
+		cursor: pointer;
+		overflow:hidden;
+	}
+	::-webkit-input-placeholder { /* WebKit browsers */
+		color:    #8b8b8b;
+		font-style: italic;
+		font-family: '나눔고딕';
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		color:    #8b8b8b;
+		font-style: italic;
+		font-family: '나눔고딕';
+		opacity:  1;
+	}
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+		color:    #8b8b8b;
+		font-style: italic;
+		font-family: '나눔고딕';
+		opacity:  1;
+	}
+	:-ms-input-placeholder { /* Internet Explorer 10+ */
+		color:    #8b8b8b;
+		font-style: italic;
+		font-family: '나눔고딕';
+	}
+}
 
 /* condition badge */
 .mp-condition-badge {

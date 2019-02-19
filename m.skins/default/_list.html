@@ -18,16 +18,16 @@
 	<li>
 		<a href="{getUrl('document_srl', $marketitem->document_srl)}">
 			<div class="thumb" style="padding-right:10px;">
-				<img src="{$marketitem->getThumbnail(160, 160)}" style="border-radius:3px" height="80px" width="80px"/>
+				<img src="{$marketitem->getThumbnail(80, 80)}" style="border-radius:3px"/>
 			</div>
 			<div class="meta">
 				<block cond=" ($marketitem->get('item_condition') != NULL) && ($marketitem->get('item_condition') != 'new') && ($marketitem->get('item_condition') != 'no')">
-					<span style="background-color:#ec6a6a" class="category">{$marketitem->get('item_condition')}</span>
+					<span style="" class="category">{$marketitem->get('item_condition')}</span>
 				</block>
-				<span class="category" style="background-color:#518cd8">
+				<span class="category">
 					<!--@if($module_info->hide_category == "N" && $marketitem->get('category_srl'))-->{$category_list[$marketitem->get('category_srl')]->title} &rsaquo;<!--@end--> 				
 				</span>
-				<span class="title" style="padding-right:10px;"><strong>{$marketitem->getTitle($module_info->subject_cut_size)}</strong> <!--@if($marketitem->getCommentCount())--><!--@endif--></span>
+				<span class="title" style="padding-right:10px;"><strong>{$marketitem->getTitle($module_info->subject_cut_size)}</strong> <!--@if($marketitem->getCommentCount())--><em>[{$marketitem->getCommentCount()}]</em><!--@endif--></span>
 
 				<span class="price" style="float:right;margin-bottom:0px;margin-top:18px;margin-right:15px;font-size:1em;color:#000;font-weight:bold;" >￦ {($marketitem->getPrice(true))}</span>
 			
@@ -45,9 +45,7 @@
 	</li>
 	<!--@end-->
 	
-	
 </ul>
-
 <div class="pn">
 	<!--@if($page != 1)-->
 	<a href="{getUrl('page',$page-1,'document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="prev">{$lang->cmd_prev}</a> 
@@ -57,105 +55,5 @@
 	<a href="{getUrl('page',$page+1,'document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="next">{$lang->cmd_next}</a>
 	<!--@endif-->
 </div>
-	
 <br>
-
-
-
-<ul class="lt">
-	<div class="" style="border-radius: 3px 3px 0px 0px;  background-color:#5094e0;padding:20px 25px 17px 20px" >
-		<span style="font-size:1.3em;color:#ffff;font-weight:bold;">내 라켓 찾기</span>
-	</div>
-	
-	<form name="quick_search" action="{getUrl()}" method="get" no-error-return-url="true" style="padding:0px;">
-		<input type="hidden" name="mid" value="{$mid}" />
-		<input type="hidden" name="category" value="{$category}" />
-			
-		<ul class="" style="margin:0px;">
-			<li class="" style="padding-left:10px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">가격</a></li>
-			<li style="padding: 7px 10px 10px 15px;">
-			<input class="s_input" placeholder="최저" type="text" class="number" id="p_f" name="p_f" value="{number_format($p_f)}"|cond="$p_f" size="8" />
-			&nbsp-&nbsp
-			<input class="s_input" placeholder="최고" type="text" class="number" id="p_t" name="p_t" value="{number_format($p_t)}"|cond="$p_t" size="8" />
-			</li>
-		</ul>
-				
-		<ul class="" style="margin:0px;">
-					<li class="" style="padding-left:10px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">헤드사이즈 hs</a></li>
-					<li style="padding: 7px 10px 10px 15px;">
-					<input class="s_input" placeholder="최저" type="text" class="number" id="h_f" name="h_f" value="{number_format($h_f)}"|cond="$h_f" size="8" />
-					&nbsp-&nbsp
-					<input class="s_input" placeholder="최고" type="text" class="number" id="h_t" name="h_t" value="{number_format($h_t)}"|cond="$h_t" size="8" />
-					</li>
-		</ul>
-				
-		<ul class="" style="margin:0px;">
-					<li class="" style="padding-left:10px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">라켓무게 g</a></li>
-					<li style="padding: 7px 10px 10px 15px;">
-					<input class="s_input" placeholder="최저" type="text" class="number" id="w_f" name="w_f" value="{number_format($w_f)}"|cond="$w_f" size="8" />
-					&nbsp-&nbsp
-					<input class="s_input" placeholder="최고" type="text" class="number" id="w_t" name="w_t" value="{number_format($w_t)}"|cond="$w_t" size="8" />
-					</li>
-		</ul>		
-				
-		<ul class="" style="margin:0px;">
-					<li class="" style="padding-left:10px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">발란스 mm</a></li>
-					<li style="padding: 7px 10px 10px 15px;">
-					<input class="s_input" placeholder="최저" type="text" class="number" id="b_f" name="b_f" value="{number_format($b_f)}"|cond="$b_f" size="8" />
-					&nbsp-&nbsp
-					<input class="s_input" placeholder="최고" type="text" class="number" id="b_t" name="b_t" value="{number_format($b_t)}"|cond="$b_t" size="8" />
-					</li>
-		</ul>
-				
-		<ul class="" style="margin:0px;">
-					<li class="" style="padding-left:10px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">스트링패턴</a></li>
-					<li style="padding: 7px 10px 10px 15px;">
-					<input class="s_input" placeholder="" type="text" class="number" id="s_1" name="s_1" value="{number_format($s_1)}"|cond="$s_1" size="3" />
-					&nbspX&nbsp
-					<input class="s_input" placeholder="" type="text" class="number" id="s_2" name="s_2" value="{number_format($s_2)}"|cond="$s_2" size="3" />
-					</li>
-		</ul>
-				
-		<ul class="" style="margin:0px;">
-					<li class="" style="padding-left:10px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">프레임두께 mm</a></li>
-					<li style="padding: 7px 10px 10px 15px;">
-					<input class="s_input" placeholder="" type="text" class="" id="f_1" name="f_1" value="{($f_1)}"|cond="$f_1" size="3" />
-					&nbsp/&nbsp
-					<input class="s_input" placeholder="" type="text" class="" id="f_2" name="f_2" value="{($f_2)}"|cond="$f_2" size="3" />
-					&nbsp/&nbsp
-					<input class="s_input" placeholder="" type="text" class="" id="f_3" name="f_3" value="{($f_3)}"|cond="$f_3" size="3" />
-					</li>
-		</ul>
-				
-		<ul class="" style="margin:0px;">
-					<li class="" style="padding-left:10px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">길이 inch</a></li>
-					<li style="padding: 7px 10px 10px 15px;">
-					<input class="s_input" placeholder="최저" type="text" class="" id="l_f" name="l_f" value="{($l_f)}"|cond="$l_f" size="8" />
-					&nbsp-&nbsp
-					<input class="s_input" placeholder="최고" type="text" class="" id="l_t" name="l_t" value="{($l_t)}"|cond="$l_t" size="8" />
-					</li>
-		</ul>
-				
-		<ul class="" style="margin:0px;">
-			<li class="" style="padding-left:10px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">그립사이즈</a></li>
-			<li style="padding: 10px 15px 5px 15px;"><label><input type="radio" name="g_s" value="1" checked="checked"|cond="Context::get('g_s') == '1'" /> G1 (4-1/8)</label></li></label></li>
-			<li style="padding: 5px 15px 5px 15px;"><label><input type="radio" name="g_s" value="2" checked="checked"|cond="Context::get('g_s') == '2'" /> G2 (4-1/4)</label></li></label></li>
-			<li style="padding: 5px 15px 5px 15px;"><label><input type="radio" name="g_s" value="3" checked="checked"|cond="Context::get('g_s') == '3'" /> G3 (4-3/8)</label></li></label></li>
-			<li style="padding: 5px 15px 15px 15px;"><label><input type="radio" name="g_s" value="4" checked="checked"|cond="Context::get('g_s') == '4'" /> G4 (4-1/2)</label></li></label></li>
-		</ul> 
-	
-		<input type="hidden" name="is_s" value="1" checked="checked" />
-		<input type="hidden" name="category" value="195" checked="checked" />
-
-		<ul class="" style="margin:0px;border-radius:5px;">
-			<li style="padding:10px;background-color:#fff;border-radius:5px;">
-				<input style="width:40pt;height:20pt;" type="submit" value="검색"/>
-			</li>
-		</ul> 
-	</form>
-</ul>
-
-<ul class="lt">
-<img class="zbxe_widget_output" widget="counter_status" skin="sworld_counter" colorset="white" style="padding:15px 15px"/>
-</ul>
-<br>
+<img class="zbxe_widget_output" widget="counter_status" skin="sworld_counter" colorset="white" />
