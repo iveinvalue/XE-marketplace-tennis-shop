@@ -5,10 +5,9 @@ http://topspin.co.kr
 
 screenshot
 <br>
-<img src='https://github.com/iveinvalue/XE-marketplace-tennis-shop/blob/master/img/5.PNG'/>
-<img src='https://github.com/iveinvalue/XE-marketplace-tennis-shop/blob/master/img/1.PNG'/>
-<img src='https://github.com/iveinvalue/XE-marketplace-tennis-shop/blob/master/img/3.PNG'/>
-<img src='https://github.com/iveinvalue/XE-marketplace-tennis-shop/blob/master/img/4.PNG'/>
+<img src='https://github.com/iveinvalue/XE-marketplace-tennis-shop/blob/master/img/_1.PNG'/>
+<img src='https://github.com/iveinvalue/XE-marketplace-tennis-shop/blob/master/img/_2.PNG'/>
+<img src='https://github.com/iveinvalue/XE-marketplace-tennis-shop/blob/master/img/_3.PNG'/>
 
 
 아래 프로젝트 기반입니다.<br>
