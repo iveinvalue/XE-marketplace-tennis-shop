@@ -4,6 +4,11 @@
 {@ Context::addJsFile("./common/js/xml_handler.js", true, '', -100000) }
 {@ Context::addJsFile("./common/js/xml_js_filter.js", true, '', -100000) }
 <!--%import("css/mmarketplace.css")-->
+
+<!--%import("plugin/owl-carousel/owl.carousel.css")-->
+<!--%import("plugin/owl-carousel/owl.theme.css")-->
+{@ Context::addJsFile("plugin/owl-carousel/owl.carousel.js", true, '', -100000) }
+
 <div class="bd">
 <!--@if($oDocument->isExists())-->
 <!--#include("read.html")-->

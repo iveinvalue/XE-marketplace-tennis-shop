@@ -20,7 +20,15 @@
 		{@ $depth -= 1}
 		<!--@end-->
 		<!--@endif-->
-			<li><a href="{getUrl('act','','category',$category->category_srl)}">{$category->title} <em>[{$category->document_count}]</em></a>
+			<!--@if($category->depth == 0)-->
+			<li style="background-color:#3f4650;"><a href="{getUrl('act','','category',$category->category_srl)}" style="color:#ffffff;">{$category->title} <em style="color:#ffffff;">[{$category->document_count}]</em></a>
+			<!--@elseif($category->depth == 1)-->
+			<li style="background-color:#e8e8e8;"><a href="{getUrl('act','','category',$category->category_srl)}" style="color:#111111;">{$category->title} <em style="color:#111111;">[{$category->document_count}]</em></a>
+			<!--@elseif($category->depth == 2)-->
+			<li style="background-color:#ffffff;"><a href="{getUrl('act','','category',$category->category_srl)}" style="color:#111111;">{$category->title} <em style="color:#111111;">[{$category->document_count}]</em></a>
+			<!--@else-->
+			<li ><a href="{getUrl('act','','category',$category->category_srl)}">{$category->title} <em>[{$category->document_count}]</em></a>
+			<!--@end-->
 			{@ $start = false }
 			{@ $depth = $category->depth }
 		<!--@endforeach-->

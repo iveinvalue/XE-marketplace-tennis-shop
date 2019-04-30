@@ -84,6 +84,21 @@ function doToggleWishItem(document_srl)
 		}, responses);
 }
 
+/* scrap */
+function gosms(document_srl,pnum)
+{
+	var params = [];
+	var responses = [ 'error', 'message', 'document_srl' ];
+
+	params.document_srl = document_srl;
+	params.pnum = pnum;
+	exec_xml('marketplace','procMarketplaceToggleWishlist', params, 
+		function(ret_obj){
+			alert(ret_obj.message);
+			location.reload();
+		}, responses);
+}
+
 function doChangeItemStatus(document_srl, type)
 {
 	var params = [];

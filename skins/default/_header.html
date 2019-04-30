@@ -33,10 +33,10 @@
     <div class="mp-sidebar mp-clearfix" style="width: 190px;">
 
 		<block cond="count($cate_list)">
-        <div class="" style="border-radius: 5px 5px 0px 0px; background-color:#262b31;padding:20px 25px 17px 20px" >
+        <div class="" style="border-radius:0px; background-color:#0d0f0e;padding:20px 25px 17px 20px" >
 			<span style="font-size:1.3em;color:#ffff;font-weight:bold;">카테고리</span>
 		</div>
-        <ul class="sidemenu card" style="border-radius:5px;">
+        <ul class="sidemenu card" style="border-radius:0px;">
             <li class="active"|cond="!$category"><a  href="{getUrl('','mid',$mid)}">{$lang->total}</a></li>
             <li loop="$cate_list=>$key,$val" class="active"|cond="$category==$val->category_srl || $category_list[$category]->parent_srl==$val->category_srl || $category_list[$category]->parent_srl->parent_srl==$val->category_srl">
 				<a  href="{getUrl(category,$val->category_srl,'document_srl','', 'page', '', 'act', '')}">{$val->title} ({$val->document_count})<!--<em cond="$val->document_count">[{$val->document_count}]</em>--></a>
@@ -50,8 +50,10 @@
                 </ul>
             </li>
 			
-
-
+			<block cond="$grant->manager">
+			<li class="divider"></li>
+            <li><a href="http://topspin.co.kr/sms.csv"><i class="xe-star"></i> sms 기록</a></li>
+			</block>
 			<block cond="$logged_info">
             <li class="divider"></li>
             <li><a href="{getUrl('', 'mid', $mid, 'act','dispMarketplaceWishList')}"><i class="xe-star"></i> 관심 상품 보기</a></li>
@@ -69,9 +71,9 @@
 		
 		
 		
-        <div class="option_selector card" style="border:0px;border-radius:5px;margin-top:20px;padding:0px;">
-			
-			<div class="" style="border-radius: 5px 5px 0px 0px;  background-color:#262b31;padding:20px 25px 17px 20px" >
+        <div class="option_selector card" style="border:0px;border-radius:0px;margin-top:20px;padding:0px;">
+			<a name="my_serach"></a>
+			<div class="" style="border-radius:0px;  background-color:#0d0f0e;padding:20px 25px 17px 20px" >
 				<span style="font-size:1.3em;color:#ffff;font-weight:bold;">내 라켓 찾기</span>
 			</div>
 			<form name="quick_search" action="{getUrl()}" method="get" no-error-return-url="true" style="padding:0px;">
@@ -109,7 +111,16 @@
 					&nbsp-&nbsp
 					<input class="s_input" placeholder="최고" type="text" class="number" id="w_t" name="w_t" value="{number_format($w_t)}"|cond="$w_t" size="8" />
 					</li>
-				</ul>		
+				</ul>	
+
+				<ul class="" style="margin:0px;">
+					<li class="" style="padding:10px 15px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">스트링패턴</a></li>
+					<li style="padding: 7px 10px 10px 40px;">
+					<input class="s_input" placeholder="" type="text" class="number" id="s_1" name="s_1" value="{number_format($s_1)}"|cond="$s_1" size="3" />
+					&nbspX&nbsp
+					<input class="s_input" placeholder="" type="text" class="number" id="s_2" name="s_2" value="{number_format($s_2)}"|cond="$s_2" size="3" />
+					</li>
+				</ul>				
 				
 				<ul class="" style="margin:0px;">
 					<li class="" style="padding:10px 15px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">발란스 mm</a></li>
@@ -117,15 +128,6 @@
 					<input class="s_input" placeholder="최저" type="text" class="number" id="b_f" name="b_f" value="{number_format($b_f)}"|cond="$b_f" size="8" />
 					&nbsp-&nbsp
 					<input class="s_input" placeholder="최고" type="text" class="number" id="b_t" name="b_t" value="{number_format($b_t)}"|cond="$b_t" size="8" />
-					</li>
-				</ul>
-				
-				<ul class="" style="margin:0px;">
-					<li class="" style="padding:10px 15px;background-color:#f3f3f3;"><a style="color:#262b31;font-weight:bold;">스트링패턴</a></li>
-					<li style="padding: 7px 10px 10px 40px;">
-					<input class="s_input" placeholder="" type="text" class="number" id="s_1" name="s_1" value="{number_format($s_1)}"|cond="$s_1" size="3" />
-					&nbspX&nbsp
-					<input class="s_input" placeholder="" type="text" class="number" id="s_2" name="s_2" value="{number_format($s_2)}"|cond="$s_2" size="3" />
 					</li>
 				</ul>
 				
@@ -176,16 +178,16 @@
 			</form>
         </div> 
 
-		<div class="option_selector card" style="border:0px;border-radius:5px;margin-top:20px;padding:0px;">
-			<div class="" style="border-radius: 5px 5px 0px 0px;  background-color:#262b31;padding:20px 25px 17px 20px" >
+		<div class="option_selector card" style="border:0px;border-radius:0px;margin-top:20px;padding:0px;">
+			<div class="" style="border-radius:0px;  background-color:#0d0f0e;padding:20px 25px 17px 20px" >
 				<span style="font-size:1.3em;color:#ffff;font-weight:bold;">신발 통큰 행사</span>
 			</div>
 			<a href="http://topspin.co.kr/index.php?mid=home&category=212&document_srl=4706" >
-				<div style="height:252px;border-radius: 0px 0px 5px 5px;padding-top: 0px; font-size: 13px;" class=" back_b3" ></div>
+				<div style="height:252px;border-radius: 0px;padding-top: 0px; font-size: 13px;" class=" back_b3" ></div>
 			</a>
 		</div>
 		
-		<div class="card" style="height:90px;background-color:#fff;margin-top:20px;padding:20px;border-radius:5px;">
+		<div class="card" style="height:90px;background-color:#fff;margin-top:20px;padding:20px;border-radius:0px;">
 			<img class="zbxe_widget_output" widget="counter_status" skin="sworld_counter" colorset="white" />
 		</div>
 		

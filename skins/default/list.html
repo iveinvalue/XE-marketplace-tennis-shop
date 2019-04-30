@@ -11,22 +11,25 @@
 		</div>
 	</block>
 	
-
-	
-	<br cond="!$category && !$is_s && !$search_keyword">
-	
 	<block cond="!$category && !$is_s && !$search_keyword && !$oDocument->isExists()">
-	<div style="border-radius:5px;background-color:#262b31; padding-top: 0px; font-size: 13px;" class="card2" >
-		<div class="card2" style="border-radius:5px;padding:40px 15px 15px 15px;background-color:#262b31;width:100%;">
+	
+	<a href="http://topspin.co.kr/index.php?mid=home&category=5746">
+	<img style="border-radius:0px;padding-top: 0px; font-size: 13px;" class="card2 back_b1" src="banner/clash.png" width="860px"></img>
+	</a>
+	<br>
+	<br>
+	
+	<div style="border-radius:0px;background-color:#0d0f0e; padding-top: px; font-size: 13px;" class="card2" >
+		<div class="card2" style="border-radius:5px;padding:40px 15px 15px 15px;background-color:#0d0f0e;width:100%;">
 			<div id="premium-ad" class="mp-carousel" >
 				<!--@for($i=count($advertise_list);$i>=1;$i--)-->
 				<!--@if($i==10000)-->{@continue}<!--@end-->
-				<div class="item2" cond="($advertise_list[$i]->get('balance') == '1000')">
+				<div class="item" cond="($advertise_list[$i]->get('balance') == '1000')">
 					<div class="card" style="background-color:#ffffff;float:left;margin:10px;height:235px;width:145px;" >	
 					
 						<div  style="position:relative">
 							<block cond=" ($advertise_list[$i]->getItemCondition() != NULL) && ($advertise_list[$i]->getItemCondition() != 'new') && ($advertise_list[$i]->getItemCondition() != 'no')">
-								<span style="height:25px;text-align:right;width:auto;padding:7px;font-size:1em;color:#ffffff;background-color:#f06060;" class="card mp-condition-badge mp-condition-badge-small mp-new">{$advertise_list[$i]->getItemCondition()}</span>
+								<span style="height:25px;text-align:right;width:auto;padding:7px;font-size:1em;color:#ffffff;background-color:#ed6464;" class="card mp-condition-badge mp-condition-badge-small mp-new">{$advertise_list[$i]->getItemCondition()}</span>
 							</block>
 							<a href="{getUrl('','act','procMarketplaceActionRecord','document_srl',$advertise_list[$i]->document_srl)}" >
 								<img class="zoom" width="145px" src="{$advertise_list[$i]->getThumbnail(200,200)}" alt="IMG-PRODUCT" style="transform:rotate(0deg);">
@@ -40,19 +43,19 @@
 						<div style="float:left;margin-bottom:0px;margin-top:17px;margin-left:13px;margin-right:10px;">
 							<a href="{getUrl('','act','procMarketplaceActionRecord','document_srl',$advertise_list[$i]->document_srl)}" style="text-decoration:none;padding:5px 10px;background:#ef7e32" class="btn_secondary_round" ><span style="font-size:0.9em;color:#ffffff">￦ {$advertise_list[$i]->getPrice(true)}</span></a>
 						</div>
-										
+						
 					</div>	
                 </div>
 				<!--@end-->
             </div>
 		</div>
-	</div>	
-	<br>
-	</block>
+
+	</div>
 	
-	<block cond="!$category && !$is_s && !$search_keyword && !$oDocument->isExists()">
-	<div style="border-radius:5px;background-color:#262b31; padding-top: 0px; font-size: 13px;" class="card2" >
-		<div class="card2" style="border-radius:5px;padding:40px 15px 15px 15px;background-color:#262b31;width:100%;">
+	<br>
+	
+	<div style="border-radius:0px;background-color:#0d0f0e; padding-top: 0px; font-size: 13px;" class="card2" >
+		<div class="card2" style="border-radius:5px;padding:40px 15px 15px 15px;background-color:#0d0f0e;width:100%;">
 			<div id="premium-ad2" class="mp-carousel" >
 				<!--@for($i=count($advertise_list);$i>=1;$i--)-->
 				<!--@if($i==10000)-->{@continue}<!--@end-->
@@ -81,18 +84,16 @@
 				<!--@end-->
             </div>
 		</div>
-    <script>
-    
-    </script>
+
 	</div>
-	<br>	
+	<br>		
 	</block>
 
-	<!--카테고리 설명-->
-	<div style="border-radius: 5px;padding:10px 0px 0px 0px;" class="" cond="$category">
 	
+	<!--카테고리 설명-->
+	<div style="border-radius: 0px;padding:10px 0px 0px 0px;" class="" cond="$category">
 		<block cond="$category">
-			<span class="card2" style="color:#fff;background:#262b31; padding:6px 9px;margin-right:5px;border-radius:2px; font-size: 15px;">마켓 상품 목록 ({$total_count})</span>
+			<span class="card2" style="color:#fff;background:#0d0f0e; padding:6px 9px;margin-right:5px;border-radius:0px; font-size: 15px;">마켓 상품 목록 ({$total_count})</span>
 		</block>
 		<!--
 		<block cond="$item_condition || $price_from || $price_to || $search_keyword || $weight_from || $weight_to"&& $size1_from && $size1_to&& $size2_from && $size2_to>
@@ -100,36 +101,36 @@
 		</block>-->
 		
 		<block cond="$category">
-			<span class="card2" style="color:#fff;background:#262b31; padding:6px 9px; border-radius:2px; font-size: 15px;">
+			<span class="card2" style="color:#fff;background:#0d0f0e; padding:6px 9px; border-radius:0px; font-size: 15px;">
 				<i class=" xe-angle-right" ></i> 
 			</span>
 			&nbsp
-			<span class="card2" style="color:#fff;background:#262b31; padding:6px 9px; border-radius:2px; font-size: 15px;" cond="$category_list[$category_list[$category]->parent_srl]->title">
+			<span class="card2" style="color:#fff;background:#0d0f0e; padding:6px 9px; border-radius:0px; font-size: 15px;" cond="$category_list[$category_list[$category]->parent_srl]->title">
 			{$category_list[$category_list[$category]->parent_srl]->title}
 			</span>
 			<span cond="$category_list[$category_list[$category]->parent_srl]->title">
 				&nbsp;
 			</span>
-			<span class="card2" style="color:#fff;background:#262b31; padding:6px 9px; border-radius:2px; font-size: 15px;" cond="$category_list[$category]->parent_srl">
+			<span class="card2" style="color:#fff;background:#0d0f0e; padding:6px 9px; border-radius:0px; font-size: 15px;" cond="$category_list[$category]->parent_srl">
 				<i class=" xe-angle-right" ></i> 
 			</span>
 			<span cond="$category_list[$category]->parent_srl">
 				&nbsp;
 			</span>
-			<span class="card2" style="color:#fff;background:#262b31; padding:6px 9px; border-radius:2px; font-size: 15px;">
+			<span class="card2" style="color:#fff;background:#0d0f0e; padding:6px 9px; border-radius:0px; font-size: 15px;">
 				{$category_list[$category]->title}
 			</span>
 		</block>
 	</div>
 	
 	
-	<div style="border-radius:5px; padding:10px 0px 0px 0px;" class="" cond="!$category && !$oDocument->isExists() ">
-		<span class="card2" style="color:#fff;background:#262b31; padding:6px 9px;margin-right:5px; border-radius:2px; font-size: 15px;">마켓 상품 목록 ({$total_count})</span>
-		<span class="card2" style="color:#fff;background:#262b31; padding:6px 9px; border-radius:2px; font-size: 15px;">
+	<div style="border-radius:0px; padding:10px 0px 0px 0px;" class="" cond="!$category && !$oDocument->isExists() ">
+		<span class="card2" style="color:#fff;background:#0d0f0e; padding:6px 9px;margin-right:5px; border-radius:0px; font-size: 15px;">마켓 상품 목록 ({$total_count})</span>
+		<span class="card2" style="color:#fff;background:#0d0f0e; padding:6px 9px; border-radius:0px; font-size: 15px;">
 			<i class=" xe-angle-right" ></i> 
 		</span>
 		&nbsp
-		<span class="card2" style="color:#fff;background:#262b31; padding:6px 9px; border-radius:2px; font-size: 15px;">
+		<span class="card2" style="color:#fff;background:#0d0f0e; padding:6px 9px; border-radius:0px; font-size: 15px;">
 			전체상품
 		</span>
 	</div>
@@ -137,7 +138,7 @@
 	<br>
 	
 	<!--카드뷰 상품-->
-	<div cond="true" style="height:960px;border-radius:5px;background-color:#fff; padding-top: 0px font-size: 13px;" class="card2"  >	
+	<div cond="true" style="height:960px;border-radius:0px;background-color:#fff; padding-top: 0px font-size: 13px;" class="card2"  >	
 		<div class="" style="border-radius:5px;padding:15px 0px 0px 20px;background-color:#fff;width:100%;">
 			<div class="item" loop="$marketitem_list=>$document" >
 			
@@ -186,7 +187,7 @@
 	</div>
 		
 	<!--페이지넘김-->
-	<div cond="$category || $item_condition || $price_from || $price_to || $search_keyword || $weight_from || $weight_to || true" style="border-radius:5px;background-color:#fff;float:center;width:auto;height:60px;padding: 13px 10px 12px; font-size: 13px; margin-top:15px" class="card2">
+	<div cond="$category || $item_condition || $price_from || $price_to || $search_keyword || $weight_from || $weight_to || true" style="border-radius:0px;background-color:#fff;float:center;width:auto;height:60px;padding: 13px 10px 12px; font-size: 13px; margin-top:15px" class="card2">
 		<center class="bd_paginate" cond="$marketitem_list" style="margin-top:0px;">
 			<a class="pg_btn" href="{getUrl('page','','document_srl','','division',$division,'last_division',$last_division)}">
 				<i class="xe-angle-left"><span class="blind">{$lang->first_page}</span></i>
@@ -216,7 +217,7 @@
 <include target="_footer.html" />
 
 <script>
-    jQuery(document).ready(function() {
+jQuery(document).ready(function() {
       var owl = jQuery("#premium-ad");
       owl.owlCarousel({
         autoPlay: false, //Set AutoPlay to 3 seconds

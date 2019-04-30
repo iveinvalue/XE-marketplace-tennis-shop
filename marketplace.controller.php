@@ -1089,6 +1089,82 @@ class marketplaceController extends marketplace
 
 	function procMarketplaceToggleWishlist()
 	{
+$document_srl = Context::get('document_srl');
+$pnum = Context::get('pnum');
+
+
+$oMarketplaceModel = getModel('marketplace');
+$oMarketItem = $oMarketplaceModel->getMarketplaceItem($document_srl);
+$contennttt = $oMarketItem->get('product_name2');
+//$this->setMessage($document_srl."--".$contennttt.$pnum);
+
+$regExp = "/^01([0|1|6|7|8|9]?)?([0-9]{3,4})?([0-9]{4})$/";
+$check_num=preg_match($regExp, $pnum);
+
+
+$flag = 0;
+
+if(!$check_num){
+	$flag = 1;
+	$this->setMessage("휴대폰 번호에 오류가 있습니다.");
+}else if(strlen( $contennttt ) < 3){
+	$flag = 1;
+	$this->setMessage("문의가 지원되지 않는 상품입니다.");
+}
+
+if($flag == 0){
+	$configFile = file_get_contents("./config.json");
+	$config = json_decode($configFile, true);
+
+	// apiKey && apiSecret are acquired from coolsms.co.kr/credentials
+	$apiKey = $config["apiKey"];
+	$apiSecret = $config["apiSecret"];
+	date_default_timezone_set('Asia/Seoul');
+	$date = date('Y-m-d\TH:i:s.Z\Z', time());  // date must be ISO 8361 format
+	$salt = uniqid(); // Any random strings with [0-9a-zA-Z]
+	$signature = hash_hmac('sha256', $date.$salt, $apiSecret);
+	$url = "https://rest.coolsms.co.kr/messages/v4/send";
+
+	$fields = new stdClass();
+	$message = new stdClass();
+
+	$message->text = "[탑스핀테니스스포츠]\n문의내용 : ".$contennttt;
+	//echo $message->text;
+	$message->type = $config["type"];
+	$message->to = $pnum;
+	$message->from = $config["from"];
+	$fields->message = $message;
+
+	$for_log = $message->to.",\"".date("Y/m/d-H:i")."\",\"".$contennttt."\",http://topspin.co.kr/home/".$document_srl.",".$oMarketItem->get('product_name');
+
+	$fields_string = json_encode($fields);
+	$header = "Authorization: HMAC-SHA256 apiKey={$apiKey}, date={$date}, salt={$salt}, signature={$signature}";
+	//open connection
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array($header, "Content-Type: application/json"));
+	curl_setopt($ch, CURLOPT_POST, count($fields));
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+	curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+	$result = curl_exec($ch);
+	if (strpos($result, '정상 접수') !== false) {
+		//file_save($for_log);
+		$fp = fopen("./sms.csv", "a");
+		fwrite($fp, $for_log.",성공\n"); 
+		fclose($fp);
+		$this->setMessage("전송 성공");
+	}else{
+		$fp = fopen("./sms.csv", "a");
+		fwrite($fp, $for_log.",실패\n"); 
+		fclose($fp);
+		$this->setMessage("전송 실패");
+	}	
+	
+}
+
+
+
+		/*
 		$logged_info = Context::get('logged_info');
 		if(!$logged_info) {
 			$this->setMessage('로그인이 필요합니다.');
@@ -1122,9 +1198,13 @@ class marketplaceController extends marketplace
 		$output = executeQuery('marketplace.insertWishlist', $args);
 		if(!$output->toBool()) return $output;
 
-		$this->setMessage('이 상품을 관심목록에 등록(찜)하였습니다.');
+		$this->setMessage('이 상품을 관심목록에 등록(찜)하였습니다.');*/
 	}
 
+function file_save($str){
+	
+	
+}
 
 	function deleteItemCondition($module_srl, $eid = null)
 	{
