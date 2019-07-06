@@ -5,9 +5,9 @@ http://topspin.co.kr
 
 screenshot
 <br>
-<img src='https://github.com/iveinvalue/XE-marketplace-tennis-shop/blob/master/img/_1.PNG'/>
-<img src='https://github.com/iveinvalue/XE-marketplace-tennis-shop/blob/master/img/_2.PNG'/>
-<img src='https://github.com/iveinvalue/XE-marketplace-tennis-shop/blob/master/img/_3.PNG'/>
+<img src='https://github.com/jungh0/XE-marketplace-tennis-shop/blob/master/img/_1.PNG'/>
+<img src='https://github.com/jungh0/XE-marketplace-tennis-shop/blob/master/img/_2.PNG'/>
+<img src='https://github.com/jungh0/XE-marketplace-tennis-shop/blob/master/img/_3.PNG'/>
 
 
 아래 프로젝트 기반입니다.<br>
@@ -17,7 +17,7 @@ https://github.com/upgle/marketplace<br>
 
 
 <h2>라이센스 License</h2>
-<p><a href="https://github.com/iveinvalue/XE-marketplace-tennis-shop/blob/master/LICENSE">GPL v3 (GNU GENERAL PUBLIC LICENSE Version 3)</a></p>
+<p><a href="https://github.com/jungh0/XE-marketplace-tennis-shop/blob/master/LICENSE">GPL v3 (GNU GENERAL PUBLIC LICENSE Version 3)</a></p>
 <h2>포함된 오픈소스 및 라이센스</h2>
 
 <ul>
