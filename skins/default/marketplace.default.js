@@ -1,6 +1,7 @@
 jQuery(function($) {
 
 	function cropPreviewImage(input) {
+		//alert("a");
 		if (input.files && input.files[0]) {
 			var reader = new FileReader();
 
@@ -12,16 +13,29 @@ jQuery(function($) {
 				var image = new Image();
 				image.src = e.target.result;
 				image.onload = function() {
-					if( rate > this.width/this.height)
+					if( rate > this.width/this.height){
 						$(input).parent().find('.preview').width(width);
-					else
+						$('.preview').width(width);
+					}
+						
+					else{
 						$(input).parent().find('.preview').height(height);
+						$('.preview').height(height);
+					}
+						
 				};
 
 				$(input).parent().find('.preview').attr('src', e.target.result).show();
 				$(input).parent().find('.mp-no-image').hide();
+
+				$('.preview').attr('src', e.target.result).show();
+				$('.mp-no-image').hide();
+
+
+				
 			}
 			reader.readAsDataURL(input.files[0]);
+			
 		}
 	}
 	$(".insertImage").change(function(){
@@ -35,6 +49,14 @@ jQuery(function($) {
 		}
 		else
 		{
+			// $(".ffimage1").value = this.value;
+			// $(".ffimage2").value = this.value;
+			// $(".insertImage").value = this.value;
+
+			
+			// cropPreviewImage($(".ffimage1"));
+			// cropPreviewImage($(".ffimage2"));
+			// cropPreviewImage($(".insertImage"));
 			cropPreviewImage(this);
 		}
 

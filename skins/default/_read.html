@@ -52,12 +52,28 @@ xe.lang.ask_change_selling = '{$lang->ask_change_selling}';
 			</div>
 			<div id="thumbnails" class="thumbnails" cond="count($oMarketItem->getThumbnails())>1"> 
 				<block loop="$thumbnails => $key, $thumbnail">
-					<a class="colorbox active"|cond="!$key" class="colorbox"|cond="$key" href="{$thumbnail->uploaded_filename}"><img src="{$thumbnail->thumbnail_url}" /></a>
+					<a class="colorbox active"|cond="!$key" class="colorbox"|cond="$key" href="{$big_thumb->uploaded_filename}"><img src="{$big_thumb->thumbnail_url}" /></a>
 				</block>
 			</div>
+			<div id="thumbnails" class="thumbnails" cond="count($oMarketItem->getThumbnails())<=1"> 
+				<block loop="$thumbnails => $key, $thumbnail">
+					<a class="colorbox active"|cond="!$key" class="colorbox"|cond="$key" href="{$big_thumb->uploaded_filename}"><img src="{$big_thumb->thumbnail_url}" /></a>
+					<a class="colorbox active"|cond="!$key" class="colorbox"|cond="$key" href="{$big_thumb->uploaded_filename}"><img src="{$big_thumb->thumbnail_url}" /></a>
+					<a class="colorbox active"|cond="!$key" class="colorbox"|cond="$key" href="{$big_thumb->uploaded_filename}"><img src="{$big_thumb->thumbnail_url}" /></a>
+					<a class="colorbox active"|cond="!$key" class="colorbox"|cond="$key" href="{$big_thumb->uploaded_filename}"><img src="{$big_thumb->thumbnail_url}" /></a>
+				</block>
+			</div>
+			<!-- <div id="thumbnails" class="thumbnails" cond="count($oMarketItem->getThumbnails())>1"> 
+				<block loop="$thumbnails => $key, $thumbnail">
+					<a class="colorbox active"|cond="!$key" class="colorbox"|cond="$key" href="{$thumbnail->uploaded_filename}"><img src="{$thumbnail->thumbnail_url}" /></a>
+				</block>
+			</div> -->
 			<!-- 대표사진만 있을때 대표사진에 Colorbox 적용 -->
-			<script cond="count($thumbnails) <= 1">
+			<!-- <script cond="count($thumbnails) <= 1">
 			jQuery(".itm_prview .colorbox").colorbox({maxWidth : '800px', opacity : '0.7'});
+			</script> -->
+			<script>
+				jQuery(".itm_prview .colorbox").colorbox({maxWidth : '800px', opacity : '0.7'});
 			</script>
 			<!-- 다른 사진도 있을 경우 -->
 			<script>
