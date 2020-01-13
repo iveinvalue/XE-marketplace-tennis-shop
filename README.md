@@ -1,20 +1,18 @@
 # XE-marketplace-tennis-shop
 
-프로젝트 적용<br>
-http://topspin.co.kr
+프로젝트 적용
+<pre><a href="http://topspin.co.kr">http://topspin.co.kr</a></pre>
 
-screenshot
-<br>
-<img src='https://github.com/jungh0/XE-marketplace-tennis-shop/blob/master/img/_1.PNG'/>
-<img src='https://github.com/jungh0/XE-marketplace-tennis-shop/blob/master/img/_2.PNG'/>
-<img src='https://github.com/jungh0/XE-marketplace-tennis-shop/blob/master/img/_3.PNG'/>
+프로젝트 기반
+<pre><a href="https://github.com/upgle/marketplace">https://github.com/upgle/marketplace</a></pre>
 
-
-아래 프로젝트 기반입니다.<br>
-https://github.com/upgle/marketplace<br>
-
-
-
+## 소개
+**탑스핀 테니스 쇼핑몰**<br>
+![image](https://user-images.githubusercontent.com/8678595/72257719-a3fffb80-364f-11ea-8755-911a34765d64.png)
+![image](https://user-images.githubusercontent.com/8678595/72257782-cabe3200-364f-11ea-882c-f399c0d8f0c1.png)
+![image](https://user-images.githubusercontent.com/8678595/72257739-b5e19e80-364f-11ea-83fb-197654a070ac.png)
+![image](https://user-images.githubusercontent.com/8678595/72257877-0c4edd00-3650-11ea-80a9-773362c17dfc.png)
+![image](https://user-images.githubusercontent.com/8678595/72257915-212b7080-3650-11ea-8ea8-582aaddbc089.png)
 
 <h2>라이센스 License</h2>
 <p><a href="https://github.com/jungh0/XE-marketplace-tennis-shop/blob/master/LICENSE">GPL v3 (GNU GENERAL PUBLIC LICENSE Version 3)</a></p>
